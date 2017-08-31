@@ -15,10 +15,10 @@ c.PAMAuthenticator.open_sessions = False
 c.JupyterHub.spawner_class = 'kubespawner.KubeSpawner'
 c.JupyterHub.ip = '0.0.0.0'
 c.JupyterHub.hub_ip = '0.0.0.0'
-c.KubeSpawner.start_timeout = 60 * 10**10
-c.Spawner.http_timeout = 60 * 10**10
+c.KubeSpawner.start_timeout = 60 * 5
+#c.KubeSpawner.http_timeout = 60 * 10**7 -> not implemented by KubeSpawner
 
-c.KubeSpawner.singleuser_image_spec = '10.6.91.18:5000/jupyterhub/systemuser:latest'
+c.KubeSpawner.singleuser_image_spec = '10.6.91.18:5000/jovial/jovialuser:latest'
 #c.KubeSpawner.singleuser_image_spec = 'jupyterhub/singleuser:0.8'
 c.KubeSpawner.singleuser_image_pull_policy = 'Always'
 c.KubeSpawner.hub_connect_ip = '10.100.0.2'

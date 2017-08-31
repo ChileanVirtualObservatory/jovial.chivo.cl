@@ -40,7 +40,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: jupyterhub-test
+  name: jovialhub
   namespace: jovial
   labels:
     app: jovial-deployment
@@ -56,7 +56,7 @@ spec:
         kubernetes.io/hostname: cassaca-node008
       containers:
       - name: jupyterhub
-        image: 10.6.91.18:5000/jovial/jupyterhub
+        image: 10.6.91.18:5000/jovial/hub
         ports:
         - name: hub-ui
           containerPort: 8000
