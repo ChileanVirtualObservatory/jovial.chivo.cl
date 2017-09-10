@@ -5,6 +5,10 @@ RUN apt update && apt install -y \
     openssh-client \
     git \
     curl \
+    vim \
+    emacs \
+    nano \
+    wget \
     && rm -rf /var/lib/apt/lists/*
 
 ADD Anaconda3-4.4.0-Linux-x86_64.sh /conda-installer.sh 
