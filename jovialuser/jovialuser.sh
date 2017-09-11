@@ -1,6 +1,8 @@
 #! /bin/bash
 set -xe
-USER_ID=$(stat -c "%u" /home/$USER/)
+if [ -z "$USER_ID"]; then
+	USER_ID=$(stat -c "%u" /home/$USER/)
+fi
 useradd -u $USER_ID -s $SHELL $USER
 notebook_arg=""
 if [ -n "${NOTEBOOK_DIR:+x}" ]
