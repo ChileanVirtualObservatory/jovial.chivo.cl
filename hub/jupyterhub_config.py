@@ -45,4 +45,4 @@ c.KubeSpawner.volumes = [{
 c.KubeSpawner.namespace = "jovial"
 c.JupyterHub.extra_log_file = '/var/log/jupyterhub'
 c.JupyterHub.cleanup_servers = True
-
+c.Spawner.args= ['--NotebookApp.iopub_data_rate_limit = 1000000000']
