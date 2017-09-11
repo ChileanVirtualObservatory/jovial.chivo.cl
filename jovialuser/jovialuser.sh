@@ -7,7 +7,7 @@ useradd -u $USER_ID -s $SHELL $USER
 notebook_arg=""
 if [ -n "${NOTEBOOK_DIR:+x}" ]
 then
-    notebook_arg="--notebook-dir=${NOTEBOOK_DIR}"
+    notebook_arg="--notebook-dir=${/home/$USER}"
 fi
 
 export HOME=/home/$USER
