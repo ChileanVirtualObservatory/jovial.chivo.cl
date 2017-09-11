@@ -1,6 +1,6 @@
 #! /bin/bash
 set -xe
-if [ -z "$USER_ID"]; then
+if [ -z "$USER_ID" ]; then
 	USER_ID=$(stat -c "%u" /home/$USER/)
 fi
 useradd -u $USER_ID -s $SHELL $USER
