@@ -42,6 +42,7 @@ c.KubeSpawner.volumes = [{
     }
         
 }]
+c.Spawner.http_timeout = 30000
 c.KubeSpawner.namespace = "jovial"
 c.JupyterHub.extra_log_file = '/var/log/jupyterhub'
 c.JupyterHub.cleanup_servers = True
