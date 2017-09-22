@@ -18,7 +18,7 @@ c.JupyterHub.hub_ip = '0.0.0.0'
 c.KubeSpawner.start_timeout = 60 * 5
 #c.KubeSpawner.http_timeout = 60 * 10**7 -> not implemented by KubeSpawner
 
-c.KubeSpawner.singleuser_image_spec = '10.6.91.18:5000/jovial/jovialuser:latest'
+c.KubeSpawner.singleuser_image_spec = '10.100.0.3:5000/jovial/jovialuser:latest'
 #c.KubeSpawner.singleuser_image_spec = 'jupyterhub/singleuser:0.8'
 c.KubeSpawner.singleuser_image_pull_policy = 'Always'
 c.KubeSpawner.hub_connect_ip = '10.100.0.2'
@@ -45,5 +45,5 @@ c.KubeSpawner.volumes = [{
 c.Spawner.http_timeout = 30000
 c.KubeSpawner.namespace = "jovial"
 c.JupyterHub.extra_log_file = '/var/log/jupyterhub'
-c.JupyterHub.cleanup_servers = True
+c.JupyterHub.cleanup_servers = False
 c.Spawner.args= ['--NotebookApp.iopub_data_rate_limit = 1000000000']

@@ -52,11 +52,9 @@ spec:
       labels:
         app: jovial-deployment
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: cassaca-node008
       containers:
       - name: jupyterhub
-        image: 10.6.91.18:5000/jovial/hub
+        image: 10.100.0.3:5000/jovial/hub
         ports:
         - name: hub-ui
           containerPort: 8000
@@ -72,4 +70,4 @@ spec:
       volumes:
       - name: jovial-api-token
         secret:
-          secretName: jovial-token-f11rs
+          secretName: jovial-token-m90rs

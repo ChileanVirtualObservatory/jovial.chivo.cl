@@ -1,2 +1,2 @@
-docker build --rm -t 10.6.91.18:5000/jovial/hub .
-docker push 10.6.91.18:5000/jovial/hub 
+docker build --rm -t 10.100.0.3:5000/jovial/hub .
+docker push 10.100.0.3:5000/jovial/hub 
