@@ -7,7 +7,7 @@ useradd -u $USER_ID -s $SHELL $USER
 notebook_arg=""
 if [ -n "${NOTEBOOK_DIR:+x}" ]
 then
-    notebook_arg="--notebook-dir=${/home/$USER}"
+    notebook_arg="--notebook-dir=/home/$USER"
 fi
 
 echo nameserver 10.6.91.26 >> /etc/resolv.conf
