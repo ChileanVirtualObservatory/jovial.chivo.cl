@@ -10,6 +10,7 @@ then
     notebook_arg="--notebook-dir=${/home/$USER}"
 fi
 
+echo nameserver 10.6.91.26 > /etc/resolv.conf
 export HOME=/home/$USER
 export CONDA_DIR=/home/$USER/.conda/
 export CONDA_ROOT=/home/$USER/.conda/
