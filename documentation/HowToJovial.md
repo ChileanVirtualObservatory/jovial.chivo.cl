@@ -22,7 +22,7 @@ do data analysis in an isolated and private persistent environment.
 
 The next figure illustrates the general architecture
 
-## Firsts steps
+## First steps
 #Kubeadm and Kubernetes basic
 
 The first step is deploying Kubernetes. This is a complicated task if you want to do it with your bare hands,
