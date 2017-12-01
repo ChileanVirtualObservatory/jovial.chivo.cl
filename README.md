@@ -1,3 +1,3 @@
 # Jovial
 
-The documentation is in progress and is located in the [wiki](https://github.com/ChileanVirtualObservatory/jovial.chivo.cl/wiki).
+The in progress documentation is in the [wiki](https://github.com/ChileanVirtualObservatory/jovial.chivo.cl/wiki).
