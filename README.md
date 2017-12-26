@@ -1,4 +1,4 @@
-# Jovial
+# [Jovial](https://jovial.chivo.cl) - Jupyter OVerride for Astronomical Libraries
 
 <img src="https://www.chivo.cl/media/service-images/jovial.jpg" width="500">
 
