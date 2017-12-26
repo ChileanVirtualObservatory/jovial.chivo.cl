@@ -8,3 +8,10 @@ The Jupyter OVerride for Astronomical Libraries (JOVIAL) is notebook-based cloud
 ## Documentation
 
 The latest deployment documentation can be found [here](https://github.com/ChileanVirtualObservatory/jovial.chivo.cl/wiki).
+
+
+### How to use?
+
+If you already have an account, you can go to [website](https://jovial.chivo.cl).
+
+If you don't know how to use Jupyter Notebooks, we recommend reading the following [guide](https://jupyter-notebook.readthedocs.io/en/stable/examples/Notebook/Notebook%20Basics.html)
