@@ -14,4 +14,4 @@ If you don't know how to use Jupyter Notebooks, we recommend reading the followi
 
 ## Documentation
 
-The latest deployment documentation can be found [here](https://github.com/ChileanVirtualObservatory/jovial.chivo.cl/wiki).
+Also, you can deploy your own private Jovial. The latest deployment documentation can be found [here](https://github.com/ChileanVirtualObservatory/jovial.chivo.cl/wiki).
