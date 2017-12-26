@@ -2,4 +2,4 @@
 
 ![Jovial](https://www.chivo.cl/media/service-images/jovial.jpg)
 
-Jovial is a platform where a server of JupyterHub (an application that permits multiuser spawns of Jupyter notebooks) runs within a Kubernetes infrastructure. The users have a personal account and the notebooks spawn in pods of a single docker container where the users' files are attached by docker volume. The files are managed and mounted in the hosts by LustreFS.
+The Jupyter OVerride for Astronomical Libraries (JOVIAL) is notebook-based cloud environment to process astronomical data on-line. This service provides Jupyter Notebooks to astronomers, that are executed in the cloud under a python environment. No installation required so is accesible from any device. This service is in beta testing so you need an account to use it. If you are interested in participating of this project please contact maray@inf.utfsm.cl
