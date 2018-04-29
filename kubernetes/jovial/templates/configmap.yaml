@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "jovial.fullname" . }}
+  name: {{ template "jovial.fullname" . }}-config
   labels:
     app: {{ template "jovial.name" . }}
     chart: {{ template "jovial.chart" . }}

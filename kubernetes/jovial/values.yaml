@@ -26,13 +26,13 @@ deployment:
   replicaCount: 1
   image:
     repository: docker-registry.chivo.cl/jovial/hub
-    tag: stable
+    tag: latest
     pullPolicy: IfNotPresent
   ports:
     frontend: 8000
     proxy: 8001
     rest: 8081
-  command: ["/bin/bash", "-c", "jupyterhub -f /JOVIAL_config.py"]
+  command: ["/bin/bash", "-c", "jupyterhub -f /config/JOVIAL_config.py"]
   resources: {}
   nodeSelector: {}
   tolerations: []
