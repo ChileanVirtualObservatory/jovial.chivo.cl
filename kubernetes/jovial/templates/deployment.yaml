@@ -41,13 +41,15 @@ spec:
             - name: jovial-configmap
               mountPath: /config/
           livenessProbe:
-            httpGet:
-              path: /
+            tcpSocket:
               port: frontend
+            initialDelaySeconds: 3
+            periodSeconds: 30
           readinessProbe:
-            httpGet:
-              path: /
+            tcpSocket:
               port: frontend
+            initialDelaySeconds: 10
+            periodSeconds: 60
           resources:
 {{ toYaml .Values.deployment.resources | indent 12 }}
       volumes:
