@@ -1,5 +1,27 @@
 ## JOVIAL configuration
 
+jovial:
+  kube:
+    clusterDomain: cluster.local
+    userHomeDirTemplate: /users/{username}
+  ldap:
+    address: 10.6.91.26
+    port: 389
+    dnTemplate: uid={username},dc=cm,dc=cluster
+    useSSL: False
+  hub:
+    confirmNoSSL: True
+    listenAddress: 0.0.0.0
+    cleanupUsersOnExit: False
+  spawner:
+    startTimeout: 300
+    httpTimeout: 600
+    image:
+      repository: docker-registry.chivo.cl/jovial/user
+      tag: latest
+      pullPolicy: Always
+    extraArgs: ['--NotebookApp.iopub_data_rate_limit = 1000000000']
+
 deployment:
   replicaCount: 1
   image:

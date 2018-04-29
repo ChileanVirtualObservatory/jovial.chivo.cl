@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "jovial.fullname" . }}
+  labels:
+    app: {{ template "jovial.name" . }}
+    chart: {{ template "jovial.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  JOVIAL_config.py: |
+    config = get_config()
+    false = False
+    true = True
+
+    # JupyterHub Settings ----------------------------------------------------------
+
+    config.JupyterHub.authenticator_class = 'ldapauthenticator.LDAPAuthenticator'
+    config.JupyterHub.spawner_class = 'kubespawner.KubeSpawner'
+    config.JupyterHub.extra_log_file = '/var/log/jupyterhub'
+    config.JupyterHub.ip = '{{ .Values.jovial.hub.listenAddress }}'
+    config.JupyterHub.hub_ip = '{{ .Values.jovial.hub.listenAddress }}'
+    config.JupyterHub.confirm_no_ssl = {{ .Values.jovial.hub.confirmNoSSL }}
+    config.JupyterHub.cleanup_servers = {{ .Values.jovial.hub.cleanupUsersOnExit }}
+
+    # LDAP Settings ----------------------------------------------------------------
+
+    config.LDAPAuthenticator.server_address = '{{ .Values.jovial.ldap.address }}'
+    config.LDAPAuthenticator.server_port = {{ .Values.jovial.ldap.port }}
+    config.LDAPAuthenticator.use_ssl = {{ .Values.jovial.ldap.useSSL }}
+    config.LDAPAuthenticator.bind_dn_template = '{{ .Values.jovial.ldap.dnTemplate }}'
+    config.PAMAuthenticator.open_sessions = False
+
+    # KubeSpawner Settings ---------------------------------------------------------
+
+    config.KubeSpawner.namespace = '{{ .Release.Namespace }}'
+    config.KubeSpawner.start_timeout = {{ .Values.jovial.spawner.startTimeout }}
+    config.KubeSpawner.singleuser_image_spec = '{{ .Values.jovial.spawner.image.repository }}:{{ .Values.jovial.spawner.image.tag }}'
+    config.KubeSpawner.singleuser_image_pull_policy = '{{ .Values.jovial.spawner.image.pullPolicy }}'
+    config.KubeSpawner.hub_connect_ip = '{{ template "jovial.fullname" . }}-internal.{{ .Release.Namespace }}.svc.{{ .Values.jovial.kube.clusterDomain }}'
+    config.KubeSpawner.environment = {
+            'HOME': lambda spawner: '/home/' + str(spawner.user.name),
+            'USER': lambda spawner: spawner.user.name,
+            'NOTEBOOK_DIR': lambda spawner: '/home/'+ str(spawner.user.name)
+    }
+    config.KubeSpawner.volume_mounts = [{
+        'name': '{username}',
+        'mountPath': '/home/{username}'
+    }]
+    config.KubeSpawner.volumes = [{
+        'name': '{username}',
+        'hostPath': {
+           'path': '{{ .Values.jovial.kube.userHomeDirTemplate }}'
+        }
+    }]
+
+    # General Spawner Settings -----------------------------------------------------
+
+    config.Spawner.http_timeout = {{ .Values.jovial.spawner.httpTimeout }}
+    config.Spawner.args = {{ .Values.jovial.spawner.extraArgs }}
