@@ -1,19 +1,23 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "jovial.fullname" . }}
+  name: {{ template "jovial.fullname" . }}-internal
   labels:
     app: {{ template "jovial.name" . }}
     chart: {{ template "jovial.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  type: {{ .Values.service.type }}
+  type: ClusterIP
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - port: {{ .Values.deployment.ports.rest }}
+      targetPort: rest-api
       protocol: TCP
-      name: http
+      name: rest-api
+    - port: {{ .Values.deployment.ports.proxy }}
+      targetPort: proxy-api
+      protocol: TCP
+      name: proxy-api
   selector:
     app: {{ template "jovial.name" . }}
     release: {{ .Release.Name }}

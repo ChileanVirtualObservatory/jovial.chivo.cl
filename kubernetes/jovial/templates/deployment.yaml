@@ -29,13 +29,13 @@ spec:
 {{ toYaml .Values.deployment.command | indent 12 }}
           ports:
             - name: frontend
-              containerPort: 8000
+              containerPort: {{ .Values.deployment.ports.frontend }}
               protocol: TCP
             - name: proxy-api
-              containerPort: 8001
+              containerPort: {{ .Values.deployment.ports.proxy }}
               protocol: TCP
             - name: rest-api
-              containerPort: 8081
+              containerPort: {{ .Values.deployment.ports.rest }}
               protocol: TCP
           livenessProbe:
             httpGet:

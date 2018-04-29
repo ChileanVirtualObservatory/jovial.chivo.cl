@@ -6,15 +6,15 @@ deployment:
     repository: docker-registry.chivo.cl/jovial/hub
     tag: stable
     pullPolicy: IfNotPresent
+  ports:
+    frontend: 8000
+    proxy: 8001
+    rest: 8081
   command: ["/bin/bash", "-c", "jupyterhub -f /JOVIAL_config.py"]
   resources: {}
   nodeSelector: {}
   tolerations: []
   affinity: {}
-
-service:
-  type: ClusterIP
-  port: 80
 
 ingress:
   enabled: true
