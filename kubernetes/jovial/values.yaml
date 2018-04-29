@@ -4,6 +4,13 @@
 
 replicaCount: 1
 
+nginx-ingress:
+  rbac:
+    create: true
+  controller:
+    service:
+      type: ClusterIP
+
 image:
   repository: nginx
   tag: stable
