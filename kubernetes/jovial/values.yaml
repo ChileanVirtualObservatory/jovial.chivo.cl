@@ -1,21 +1,16 @@
 ## JOVIAL configuration
 
-nginx-ingress:
-  rbac:
-    create: true
-  controller:
-    service:
-      type: NodePort
-      nodePorts:
-        http: 30080
-        https: 30443
-
-replicaCount: 1
-
-image:
-  repository: nginx
-  tag: stable
-  pullPolicy: IfNotPresent
+deployment:
+  replicaCount: 1
+  image:
+    repository: docker-registry.chivo.cl/jovial/hub
+    tag: stable
+    pullPolicy: IfNotPresent
+  command: ["/bin/bash", "-c", "jupyterhub -f /JOVIAL_config.py"]
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
 
 service:
   type: ClusterIP
@@ -28,3 +23,15 @@ ingress:
   path: /
   hosts:
     - jovial-frontend.chivo.cl
+
+## nginx-ingress dependency configuration
+
+nginx-ingress:
+  rbac:
+    create: true
+  controller:
+    service:
+      type: NodePort
+      nodePorts:
+        http: 30080
+        https: 30443

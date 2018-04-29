@@ -8,7 +8,7 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.deployment.replicaCount }}
   selector:
     matchLabels:
       app: {{ template "jovial.name" . }}
@@ -19,33 +19,43 @@ spec:
         app: {{ template "jovial.name" . }}
         release: {{ .Release.Name }}
     spec:
+      serviceAccountName: {{ template "jovial.fullname" . }}
+      automountServiceAccountToken: true
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+          command:
+{{ toYaml .Values.deployment.command | indent 12 }}
           ports:
-            - name: http
-              containerPort: 80
+            - name: frontend
+              containerPort: 8000
+              protocol: TCP
+            - name: proxy-api
+              containerPort: 8001
+              protocol: TCP
+            - name: rest-api
+              containerPort: 8081
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /
-              port: http
+              port: frontend
           readinessProbe:
             httpGet:
               path: /
-              port: http
+              port: frontend
           resources:
-{{ toYaml .Values.resources | indent 12 }}
+{{ toYaml .Values.deployment.resources | indent 12 }}
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
     {{- end }}
-    {{- with .Values.affinity }}
+    {{- with .Values.deployment.affinity }}
       affinity:
 {{ toYaml . | indent 8 }}
     {{- end }}
-    {{- with .Values.tolerations }}
+    {{- with .Values.deployment.tolerations }}
       tolerations:
 {{ toYaml . | indent 8 }}
     {{- end }}

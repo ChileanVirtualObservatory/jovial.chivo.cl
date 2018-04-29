@@ -36,38 +36,3 @@ spec:
     port: 8001
     targetPort: 8001
   clusterIP: 10.100.0.2
----
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: jovialhub
-  namespace: jovial
-  labels:
-    app: jovial-deployment
-spec:
-  replicas: 1 
-  template:
-    metadata:
-      namespace: jovial
-      labels:
-        app: jovial-deployment
-    spec:
-      containers:
-      - name: jupyterhub
-        image: 10.100.0.3:5000/jovial/hub
-        ports:
-        - name: hub-ui
-          containerPort: 8000
-        - name: proxy-api
-          containerPort: 8001
-        - name: hub-api
-          containerPort: 8081
-        command: ["/bin/bash", "-c", "jupyterhub -f /jupyterhub_config.py"]
-        volumeMounts:
-        - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-          name: jovial-api-token
-          readOnly: true
-      volumes:
-      - name: jovial-api-token
-        secret:
-          secretName: jovial-token-m90rs
