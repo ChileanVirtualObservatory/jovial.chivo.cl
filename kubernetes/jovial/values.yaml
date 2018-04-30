@@ -59,6 +59,8 @@ nginx-ingress:
   rbac:
     create: true
   controller:
+    replicaCount: 3
+    minAvailable: 2
     service:
       type: NodePort
       nodePorts:
