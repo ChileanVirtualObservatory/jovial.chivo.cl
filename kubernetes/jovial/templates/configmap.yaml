@@ -10,6 +10,7 @@ metadata:
 data:
   JOVIAL_config.py: |
     config = get_config()
+    # Since helm translates 'True' to 'true' and 'False' to 'false' we need this so we don't get python 'NameErrors'
     false = False
     true = True
 
@@ -58,8 +59,31 @@ data:
     config.KubeSpawner.singleuser_init_containers = [{
         'name': '{{ .Values.jovial.spawner.installer.name }}',
         'image': '{{ .Values.jovial.spawner.installer.image.repository }}:{{ .Values.jovial.spawner.installer.image.tag }}',
-        'imagePullPolicy': '{{ .Values.jovial.spawner.installer.image.pullPolicy }}'
+        'imagePullPolicy': '{{ .Values.jovial.spawner.installer.image.pullPolicy }}',
+        'volumeMounts': [{
+            'name': '{jovial-username}',
+            'mountPath': '/home/{jovial-username}'
+        }],
+        'env': [
+            {'name': 'USER', 'value': '{jovial-username}'},
+            {'name': 'HOME', 'value': '/home/{jovial-username}'}
+        ]
     }]
+
+    def JOVIAL_ModifyPodHook(spawner, pod):
+      spawner.log.info('[JOVIAL_ModifyPodHook]: Spawner pod internal type: ' + str(type(pod)))
+      spawner.log.info('[JOVIAL_ModifyPodHook]: Replacing \'{jovial-username}\' with \'' + str(spawner.user.name) + '\' in the \'initContainers\' section of the pod')
+      container = pod.spec.init_containers[0]
+      spawner.log.info('[JOVIAL_ModifyPodHook]: Container type: ' + str(type(container)))
+      spawner.log.info('[JOVIAL_ModifyPodHook]: Container Before: ' + str(container))
+      container['volumeMounts'][0]['name'] = container['volumeMounts'][0]['name'].replace('{jovial-username}', spawner.user.name)
+      container['volumeMounts'][0]['mountPath'] = container['volumeMounts'][0]['mountPath'].replace('{jovial-username}', spawner.user.name)
+      container['env'][0]['value'] = container['env'][0]['value'].replace('{jovial-username}', spawner.user.name)
+      container['env'][1]['value'] = container['env'][1]['value'].replace('{jovial-username}', spawner.user.name)
+      spawner.log.info('[JOVIAL_ModifyPodHook]: Container After: ' + str(container))
+      return pod
+
+    config.KubeSpawner.modify_pod_hook = JOVIAL_ModifyPodHook
 
     # General Spawner Settings -----------------------------------------------------
 
