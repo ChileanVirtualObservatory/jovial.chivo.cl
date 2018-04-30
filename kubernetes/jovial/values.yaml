@@ -16,11 +16,18 @@ jovial:
   spawner:
     startTimeout: 300
     httpTimeout: 600
+    podNameTemplate: jovial-{username}
     image:
       repository: docker-registry.chivo.cl/jovial/user
       tag: latest
       pullPolicy: Always
     extraArgs: "['--NotebookApp.iopub_data_rate_limit = 1000000000']"
+    installer:
+      name: 'conda-installer'
+      image:
+        repository: hello-world
+        tag: latest
+        pullPolicy: Always
 
 deployment:
   replicaCount: 3

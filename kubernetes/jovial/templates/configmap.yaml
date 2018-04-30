@@ -35,6 +35,8 @@ data:
 
     config.KubeSpawner.namespace = '{{ .Release.Namespace }}'
     config.KubeSpawner.start_timeout = {{ .Values.jovial.spawner.startTimeout }}
+    config.KubeSpawner.http_timeout = {{ .Values.jovial.spawner.httpTimeout }}
+    config.KubeSpawner.pod_name_template = '{{ .Values.jovial.spawner.podNameTemplate }}'
     config.KubeSpawner.singleuser_image_spec = '{{ .Values.jovial.spawner.image.repository }}:{{ .Values.jovial.spawner.image.tag }}'
     config.KubeSpawner.singleuser_image_pull_policy = '{{ .Values.jovial.spawner.image.pullPolicy }}'
     config.KubeSpawner.hub_connect_ip = '{{ template "jovial.fullname" . }}-internal.{{ .Release.Namespace }}.svc.{{ .Values.jovial.kube.clusterDomain }}'
@@ -52,6 +54,11 @@ data:
         'hostPath': {
            'path': '{{ .Values.jovial.kube.userHomeDirTemplate }}'
         }
+    }]
+    config.KubeSpawner.singleuser_init_containers = [{
+        'name': '{{ .Values.jovial.spawner.installer.name }}',
+        'image': '{{ .Values.jovial.spawner.installer.image.repository }}:{{ .Values.jovial.spawner.installer.image.tag }}',
+        'imagePullPolicy': '{{ .Values.jovial.spawner.installer.image.pullPolicy }}'
     }]
 
     # General Spawner Settings -----------------------------------------------------
