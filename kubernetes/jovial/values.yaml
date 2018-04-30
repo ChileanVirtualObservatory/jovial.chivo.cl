@@ -39,12 +39,9 @@ deployment:
   affinity: {}
 
 ingress:
-  enabled: true
   annotations:
     kubernetes.io/ingress.class: nginx
-  path: /
-  hosts:
-    - jovial-frontend.chivo.cl
+  host: jovial.chivo.cl
 
 ## nginx-ingress dependency configuration
 
