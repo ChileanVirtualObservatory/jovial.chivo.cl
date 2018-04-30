@@ -43,13 +43,9 @@ spec:
           livenessProbe:
             tcpSocket:
               port: frontend
-            initialDelaySeconds: 3
-            periodSeconds: 30
           readinessProbe:
             tcpSocket:
               port: frontend
-            initialDelaySeconds: 10
-            periodSeconds: 60
           resources:
 {{ toYaml .Values.deployment.resources | indent 12 }}
       volumes:
