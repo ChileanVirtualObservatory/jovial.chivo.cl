@@ -12,7 +12,7 @@ jovial:
   hub:
     confirmNoSSL: True
     listenAddress: 0.0.0.0
-    cleanupUsersOnExit: False
+    cleanupUsersOnExit: True
   spawner:
     startTimeout: 300
     httpTimeout: 600
@@ -25,7 +25,7 @@ jovial:
     installer:
       name: 'conda-installer'
       image:
-        repository: hello-world
+        repository: docker-registry.chivo.cl/jovial/installer
         tag: latest
         pullPolicy: Always
 
