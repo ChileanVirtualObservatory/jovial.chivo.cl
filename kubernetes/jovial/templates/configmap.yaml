@@ -9,6 +9,9 @@ metadata:
     heritage: {{ .Release.Service }}
 data:
   JOVIAL_config.py: |
+    import socket
+    import re
+
     config = get_config()
     # Since helm translates 'True' to 'true' and 'False' to 'false' we need this so we don't get python 'NameErrors'
     false = False
@@ -69,17 +72,36 @@ data:
         ]
     }]
 
+    def getLocalSpawnerIP():
+      sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+      sock.connect(('kubernetes.default.svc.cluster.local', 443))
+      return sock.getsockname()[0]
+
     def JOVIAL_ModifyPodHook(spawner, pod):
       spawner.log.info('[JOVIAL_ModifyPodHook]: Spawner pod internal type: ' + str(type(pod)))
       spawner.log.info('[JOVIAL_ModifyPodHook]: Replacing \'{jovial-username}\' with \'' + str(spawner.user.name) + '\' in the \'initContainers\' section of the pod')
       container = pod.spec.init_containers[0]
-      spawner.log.info('[JOVIAL_ModifyPodHook]: Container type: ' + str(type(container)))
-      spawner.log.info('[JOVIAL_ModifyPodHook]: Container Before: ' + str(container))
+      spawner.log.info('[JOVIAL_ModifyPodHook]: initContainer type: ' + str(type(container)))
+      spawner.log.info('[JOVIAL_ModifyPodHook]: initContainer Before: ' + str(container))
       container['volumeMounts'][0]['name'] = container['volumeMounts'][0]['name'].replace('{jovial-username}', spawner.user.name)
       container['volumeMounts'][0]['mountPath'] = container['volumeMounts'][0]['mountPath'].replace('{jovial-username}', spawner.user.name)
       container['env'][0]['value'] = container['env'][0]['value'].replace('{jovial-username}', spawner.user.name)
       container['env'][1]['value'] = container['env'][1]['value'].replace('{jovial-username}', spawner.user.name)
-      spawner.log.info('[JOVIAL_ModifyPodHook]: Container After: ' + str(container))
+      spawner.log.info('[JOVIAL_ModifyPodHook]: initContainer After: ' + str(container))
+      containerEnv = pod.spec.containers[0].env
+      index = -1
+      for i, var in enumerate(containerEnv):
+         if var.name == 'JUPYTERHUB_API_URL':
+             index = i
+             break
+      spawner.log.info('[JOVIAL_ModifyPodHook]: JUPYTERHUB_API_URL Before: ' + str(containerEnv[index].value))
+      pattern = re.compile('http:\/\/(.*):8081\/hub\/api')
+      result = pattern.search(containerEnv[index].value)
+      to_replace = result.group(1)
+      spawner_ip = getLocalSpawnerIP()
+      spawner.log.info('[JOVIAL_ModifyPodHook]: Replacing ' + to_replace + ' with ' + spawner_ip)
+      containerEnv[index].value = containerEnv[index].value.replace(to_replace, spawner_ip)
+      spawner.log.info('[JOVIAL_ModifyPodHook]: JUPYTERHUB_API_URL After: ' + str(containerEnv[index].value))
       return pod
 
     config.KubeSpawner.modify_pod_hook = JOVIAL_ModifyPodHook
