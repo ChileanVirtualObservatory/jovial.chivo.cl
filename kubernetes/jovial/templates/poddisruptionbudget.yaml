@@ -1,0 +1,15 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ template "jovial.fullname" . }}
+  labels:
+    app: {{ template "jovial.name" . }}
+    chart: {{ template "jovial.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "jovial.name" . }}
+      release: {{ .Release.Name }}
+  minAvailable: {{ .Values.deployment.minAvailable }}

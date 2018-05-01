@@ -31,6 +31,7 @@ jovial:
 
 deployment:
   replicaCount: 3
+  minAvailable: 2
   image:
     repository: docker-registry.chivo.cl/jovial/hub
     tag: latest
