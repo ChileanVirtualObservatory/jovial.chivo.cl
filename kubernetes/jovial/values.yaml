@@ -20,7 +20,7 @@ jovial:
       repository: docker-registry.chivo.cl/jovial/user
       tag: latest
       pullPolicy: Always
-    extraArgs: "['--NotebookApp.iopub_data_rate_limit = 1000000000']"
+    extraArgs: "--NotebookApp.iopub_data_rate_limit=1000000000"
     installer:
       name: 'conda-installer'
       image:

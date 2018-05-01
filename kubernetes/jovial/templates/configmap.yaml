@@ -102,10 +102,11 @@ data:
       spawner.log.info('[JOVIAL_ModifyPodHook]: Replacing ' + to_replace + ' with ' + spawner_ip)
       containerEnv[index].value = containerEnv[index].value.replace(to_replace, spawner_ip)
       spawner.log.info('[JOVIAL_ModifyPodHook]: JUPYTERHUB_API_URL After: ' + str(containerEnv[index].value))
+      extra_args = dict()
+      extra_args['name'] = 'JOVIAL_NOTEBOOK_EXTRA_ARGS'
+      extra_args['value'] = '{{ .Values.jovial.spawner.extraArgs }}'
+      containerEnv.append(extra_args)
+      spawner.log.info('[JOVIAL_ModifyPodHook]: ENV: ' + str(containerEnv))
       return pod
 
     config.KubeSpawner.modify_pod_hook = JOVIAL_ModifyPodHook
-
-    # General Spawner Settings -----------------------------------------------------
-
-    config.Spawner.args = {{ .Values.jovial.spawner.extraArgs }}
