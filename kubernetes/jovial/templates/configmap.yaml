@@ -36,7 +36,6 @@ data:
 
     config.KubeSpawner.namespace = '{{ .Release.Namespace }}'
     config.KubeSpawner.start_timeout = {{ .Values.jovial.spawner.startTimeout }}
-    config.KubeSpawner.http_timeout = {{ .Values.jovial.spawner.httpTimeout }}
     config.KubeSpawner.pod_name_template = '{{ .Values.jovial.spawner.podNameTemplate }}'
     config.KubeSpawner.singleuser_image_spec = '{{ .Values.jovial.spawner.image.repository }}:{{ .Values.jovial.spawner.image.tag }}'
     config.KubeSpawner.singleuser_image_pull_policy = '{{ .Values.jovial.spawner.image.pullPolicy }}'
@@ -87,5 +86,4 @@ data:
 
     # General Spawner Settings -----------------------------------------------------
 
-    config.Spawner.http_timeout = {{ .Values.jovial.spawner.httpTimeout }}
     config.Spawner.args = {{ .Values.jovial.spawner.extraArgs }}

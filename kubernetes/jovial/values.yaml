@@ -14,8 +14,7 @@ jovial:
     listenAddress: 0.0.0.0
     cleanupUsersOnExit: True
   spawner:
-    startTimeout: 300
-    httpTimeout: 600
+    startTimeout: 1200
     podNameTemplate: jovial-{username}
     image:
       repository: docker-registry.chivo.cl/jovial/user
