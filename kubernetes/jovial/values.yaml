@@ -8,14 +8,15 @@ jovial:
     address: 10.6.91.26
     port: 389
     dnTemplate: uid={username},dc=cm,dc=cluster
-    useSSL: False
+    useSSL: false
   hub:
-    confirmNoSSL: True
+    confirmNoSSL: true
     listenAddress: 0.0.0.0
-    cleanupUsersOnExit: True
+    cleanupUsersOnExit: true
   spawner:
     startTimeout: 1200
     podNameTemplate: jovial-{username}
+    debugMessages: false
     image:
       repository: docker-registry.chivo.cl/jovial/user
       tag: latest
