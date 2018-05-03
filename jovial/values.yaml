@@ -20,6 +20,8 @@ jovial:
       nodeSelector: {}
       tolerations: []
       affinity: {}
+    nginx:
+      domain: jovial.chivo.cl
   ldap:
     address: 10.6.91.26
     port: 389
@@ -44,11 +46,6 @@ jovial:
         repository: docker-registry.chivo.cl/jovial/installer
         tag: latest
         pullPolicy: Always
-
-
-
-ingress:
-  host: jovial.chivo.cl
 
 ## nginx-ingress dependency configuration
 

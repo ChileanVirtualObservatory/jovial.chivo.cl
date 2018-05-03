@@ -14,7 +14,7 @@ metadata:
     nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
 spec:
   rules:
-    - host: {{ .Values.ingress.host }}
+    - host: {{ .Values.jovial.kubernetes.nginx }}
       http:
         paths:
           - path: /
