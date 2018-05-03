@@ -42,7 +42,7 @@ data:
     config.KubeSpawner.pod_name_template = '{{ .Values.jovial.spawner.podNameTemplate }}'
     config.KubeSpawner.singleuser_image_spec = '{{ .Values.jovial.spawner.image.repository }}:{{ .Values.jovial.spawner.image.tag }}'
     config.KubeSpawner.singleuser_image_pull_policy = '{{ .Values.jovial.spawner.image.pullPolicy }}'
-    config.KubeSpawner.hub_connect_ip = '{{ template "jovial.fullname" . }}-internal.{{ .Release.Namespace }}.svc.{{ .Values.jovial.kube.clusterDomain }}'
+    config.KubeSpawner.hub_connect_ip = '{{ template "jovial.fullname" . }}-internal.{{ .Release.Namespace }}.svc.{{ .Values.jovial.kubernetes.clusterDomain }}'
     config.KubeSpawner.environment = {
             'HOME': lambda spawner: '/home/' + str(spawner.user.name),
             'USER': lambda spawner: spawner.user.name,
@@ -55,7 +55,7 @@ data:
     config.KubeSpawner.volumes = [{
         'name': '{username}',
         'hostPath': {
-           'path': '{{ .Values.jovial.kube.userHomeDirTemplate }}'
+           'path': '{{ .Values.jovial.kubernetes.userHomeDirTemplate }}'
         }
     }]
     config.KubeSpawner.singleuser_init_containers = [{

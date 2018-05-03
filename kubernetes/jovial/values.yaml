@@ -1,7 +1,7 @@
 ## JOVIAL configuration
 
 jovial:
-  kube:
+  kubernetes:
     clusterDomain: cluster.local
     userHomeDirTemplate: /users/{username}
   ldap:
