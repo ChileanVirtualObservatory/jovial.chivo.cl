@@ -4,6 +4,22 @@ jovial:
   kubernetes:
     clusterDomain: cluster.local
     userHomeDirTemplate: /users/{username}
+    deployment:
+      replicaCount: 3
+      minAvailable: 2
+      image:
+        repository: docker-registry.chivo.cl/jovial/hub
+        tag: latest
+        pullPolicy: IfNotPresent
+      ports:
+        frontend: 8000
+        proxy: 8001
+        rest: 8081
+      command: ["/bin/bash", "-c", "jupyterhub -f /config/JOVIAL_config.py"]
+      resources: {}
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
   ldap:
     address: 10.6.91.26
     port: 389
@@ -29,22 +45,7 @@ jovial:
         tag: latest
         pullPolicy: Always
 
-deployment:
-  replicaCount: 3
-  minAvailable: 2
-  image:
-    repository: docker-registry.chivo.cl/jovial/hub
-    tag: latest
-    pullPolicy: IfNotPresent
-  ports:
-    frontend: 8000
-    proxy: 8001
-    rest: 8081
-  command: ["/bin/bash", "-c", "jupyterhub -f /config/JOVIAL_config.py"]
-  resources: {}
-  nodeSelector: {}
-  tolerations: []
-  affinity: {}
+
 
 ingress:
   annotations:

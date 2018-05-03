@@ -8,7 +8,7 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  replicas: {{ .Values.deployment.replicaCount }}
+  replicas: {{ .Values.jovial.kubernetes.deployment.replicaCount }}
   selector:
     matchLabels:
       app: {{ template "jovial.name" . }}
@@ -23,19 +23,19 @@ spec:
       automountServiceAccountToken: true
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
-          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+          image: "{{ .Values.jovial.kubernetes.deployment.image.repository }}:{{ .Values.jovial.kubernetes.deployment.image.tag }}"
+          imagePullPolicy: {{ .Values.jovial.kubernetes.deployment.image.pullPolicy }}
           command:
-{{ toYaml .Values.deployment.command | indent 12 }}
+{{ toYaml .Values.jovial.kubernetes.deployment.command | indent 12 }}
           ports:
             - name: frontend
-              containerPort: {{ .Values.deployment.ports.frontend }}
+              containerPort: {{ .Values.jovial.kubernetes.deployment.ports.frontend }}
               protocol: TCP
             - name: proxy-api
-              containerPort: {{ .Values.deployment.ports.proxy }}
+              containerPort: {{ .Values.jovial.kubernetes.deployment.ports.proxy }}
               protocol: TCP
             - name: rest-api
-              containerPort: {{ .Values.deployment.ports.rest }}
+              containerPort: {{ .Values.jovial.kubernetes.deployment.ports.rest }}
               protocol: TCP
           volumeMounts:
             - name: jovial-configmap
@@ -47,20 +47,20 @@ spec:
             tcpSocket:
               port: frontend
           resources:
-{{ toYaml .Values.deployment.resources | indent 12 }}
+{{ toYaml .Values.jovial.kubernetes.deployment.resources | indent 12 }}
       volumes:
         - name: jovial-configmap
           configmap:
             name: {{ template "jovial.fullname" . }}-config
-    {{- with .Values.nodeSelector }}
+    {{- with .Values.jovial.kubernetes.deployment.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
     {{- end }}
-    {{- with .Values.deployment.affinity }}
+    {{- with .Values.jovial.kubernetes.deployment.affinity }}
       affinity:
 {{ toYaml . | indent 8 }}
     {{- end }}
-    {{- with .Values.deployment.tolerations }}
+    {{- with .Values.jovial.kubernetes.deployment.tolerations }}
       tolerations:
 {{ toYaml . | indent 8 }}
     {{- end }}
