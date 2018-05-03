@@ -15,4 +15,4 @@ installer-image:
 	docker push docker-registry.chivo.cl/jovial/installer
 
 install:
-	helm install kubernetes/jovial/
+	helm install jovial/
