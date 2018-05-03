@@ -48,11 +48,6 @@ jovial:
 
 
 ingress:
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/affinity: "cookie"
-    nginx.ingress.kubernetes.io/session-cookie-name: "route"
-    nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
   host: jovial.chivo.cl
 
 ## nginx-ingress dependency configuration
