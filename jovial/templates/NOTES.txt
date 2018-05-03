@@ -1,31 +1,9 @@
 
 JOVIAL was deployed using the name '{{ .Release.Name }}' in the '{{ .Release.Namespace }}' namespace
 
+{{- if .Values.jovial.kubernetes.ingress.enabled -}}
 1. You can access your JOVIAL deployment by running these commands:
 
-{{- if .Values.jovial.kubernetes.ingress.enabled -}}
     Using the nginx-ingress deployment:
-      'http://{{ .Values.jovial.kubernetes.ingress.domain }}'
+      Access to 'http://{{ .Values.jovial.kubernetes.ingress.domain }}'
 {{- end}}
-{{- else if contains "NodePort" .Values.nginx-ingress.controller.service.type }}
-    Using the 'NodePort' service:
-      export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "jovial.fullname" . }})
-      export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
-
-      You can get the address using:
-
-      echo http://$NODE_IP:$NODE_PORT
-{{- else if contains "LoadBalancer" .Values.nginx-ingress.controller.service.type }}
-    Using the 'LoadBalancer' service:
-      NOTE: It may take a few minutes for the LoadBalancer IP to be available.
-            You can watch the status of by running 'kubectl get svc -w {{ template "jovial.fullname" . }}'
-
-      export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "jovial.fullname" . }} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-      echo http://$SERVICE_IP:{{ .Values.nginx-ingress.controller.service.port }}
-{{- else if contains "ClusterIP" .Values.nginx-ingress.controller.service.type }}
-    Using the cluster-only 'ClusterIP' service:
-      export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app={{ template "jovial.name" . }},release={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
-      kubectl port-forward $POD_NAME 8080:80
-
-      Now you can visit http://127.0.0.1:8080 to use JOVIAL
-{{- end }}
