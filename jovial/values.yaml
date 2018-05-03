@@ -21,6 +21,7 @@ jovial:
       tolerations: []
       affinity: {}
     ingress:
+      enabled: false
       domain: jovial.chivo.cl
   ldap:
     address: 10.6.91.26
