@@ -1,3 +1,3 @@
 
 JOVIAL was deployed using the name '{{ .Release.Name }}' in the '{{ .Release.Namespace }}' namespace
-You can access JOVIAL at: 'http://{{ .Values.jovial.kubernetes.nginx }}'
+You can access JOVIAL at: 'http://{{ .Values.jovial.kubernetes.ingress.domain }}'

@@ -20,7 +20,7 @@ jovial:
       nodeSelector: {}
       tolerations: []
       affinity: {}
-    nginx:
+    ingress:
       domain: jovial.chivo.cl
   ldap:
     address: 10.6.91.26
