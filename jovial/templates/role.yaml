@@ -8,6 +8,6 @@ metadata:
     heritage: {{ .Release.Service }}
   name: {{ template "jovial.fullname" . }}
 rules:
-- apiGroups: ["*"]
-  resources: ["*"]
+- apiGroups: [""]
+  resources: ["pods"]
   verbs: ["*"]
