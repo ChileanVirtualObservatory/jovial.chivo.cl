@@ -95,8 +95,8 @@ data:
       index = -1
       for i, var in enumerate(containerEnv):
          if var.name == 'JUPYTERHUB_API_URL':
-             index = i
-             break
+            index = i
+            break
       if {{ .Values.jovial.spawner.debugMessages }}:
         spawner.log.info('[JOVIAL_ModifyPodHook]: JUPYTERHUB_API_URL Before: ' + str(containerEnv[index].value))
       pattern = re.compile('http:\/\/(.*):8081\/hub\/api')
