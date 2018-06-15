@@ -1,9 +1,0 @@
-
-JOVIAL was deployed using the name '{{ .Release.Name }}' in the '{{ .Release.Namespace }}' namespace
-
-{{- if .Values.jovial.kubernetes.ingress.enabled -}}
-1. You can access your JOVIAL deployment by running these commands:
-
-    Using the nginx-ingress deployment:
-      Access to 'http://{{ .Values.jovial.kubernetes.ingress.domain }}'
-{{- end}}
