@@ -4,7 +4,7 @@
 <img src="https://www.chivo.cl/media/service-images/jovial.jpg" width="500">
 </p>
 
-JOVIAL is a notebook-based cloud environment to process astronomical data on-line. This service provides Jupyter Notebooks that are executed in the cloud to astronomers. No installation is required from the user, so is available from any device with a web browser.
+JOVIAL is a notebook-based cloud environment to process astronomical data on-line. This service provides Jupyter Notebooks that are executed in the cloud to astronomers. No installation is required from the user, so is available from any device with a recent web browser.
 
 The service is in `alpha` and you need an account to use it. If you are interested in this project please contact maray@inf.utfsm.cl
 
@@ -12,6 +12,8 @@ The service is in `alpha` and you need an account to use it. If you are interest
 
 If you already have an account you can go to the [website](https://jovial.chivo.cl) and try some tutorials from [here](https://github.com/maray/jupyter-tutorial-adass17).
 
-## Documentation
+## Private Deployment
 
-Also, you can deploy your own private Jovial. The latest deployment documentation can be found [here](https://github.com/ChileanVirtualObservatory/jovial.chivo.cl/wiki).
+It is possible to deploy your own private version of JOVIAL, you will need a working [Kubernetes](https://kubernetes.io) cluster with the [helm](https://helm.sh/) package manager installed.
+
+Once you are ready to deploy JOVIAL read the [deployment](deployment.md) document.
