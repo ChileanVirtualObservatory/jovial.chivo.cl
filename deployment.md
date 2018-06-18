@@ -14,6 +14,8 @@ This chart bootstraps an JOVIAL deployment on a [Kubernetes](http://kubernetes.i
 
 ## Prerequisites
   - Kubernetes 1.6+ with RBAC rules **enabled**
+  - A NFS server where users homes are stored
+  - A LDAP server where users information is stored
 
 ## Installing the Chart
 
@@ -42,12 +44,31 @@ The command removes all the Kubernetes components associated with the chart and 
 The following table lists the configurable parameters of the JOVIAL chart and their default values.
 
 Parameter | Description | Default
---- | --- | ---
-`jovial.kubernetes.clusterDomain` | Domain of the kubernetes cluster | `cluster.local`
+--- | --- | ----
+`k8s.domain` | Internal domain of the kubernetes cluster. | `cluster.local`
+`k8s.deploy.replicas` | Number of replicas for the hub server. | `3`
+`k8s.deploy.minAvailable` | Minimal number of replicas available for the hub server. | `2`
+`k8s.deploy.image` | Docker image for the hub server. | `docker.chivo.cl/jovial/hub:latest`
+`k8s.deploy.ports.frontend` | Port where the hub server will serve the browser content. | `8000`
+`k8s.deploy.ports.proxy` | Port where the hub server will serve the proxy api. | `8001`
+`k8s.deploy.ports.rest` | Port where the hub server will serve the rest api. | `8081`
+`k8s.ingress.enabled` | Should this chart create an ingress resource? | `true`
+`k8s.ingress.domain` | Domain of the ingress resource that will route to JOVIAL. | `jovial.example.com`
+`users.home.nfs.server` | Address of the NFS server where users homes are stored. | `nfs.example.com`
+`users.home.nfs.path` | Path in the NFS server where users homes are stored. | `/exports/users`
+`users.ldap.address` | Address of the LDAP server where users information is stored. | `ldap.example.com:389`
+`users.ldap.useSSL` | Should the LDAP authenticator of the hub use SSL to talk with the LDAP server? | `true`
+`users.ldap.dn` | Template used as DN when authenticating the user against the LDAP server, here the token **`username`** will be replaced with the username of who is currently trying to login in the hub frontend. | `uid={username},dc=people,dc=example,dc=com`
+`users.container.image` | Docker image for the user notebook server | `docker.chivo.cl/jovial/user:latest`
+`users.container.extraArgs` | Extra command line arguments to the notebook server | `[""]`
+`hub.debug` | While starting a user pod, the hub server can print additional information related to JOVIAL internal configurations, use this setting to enable or disable this messages. | `false`
+`hub.timeout` | Timeout in seconds to wait for the user pod to start and initialize communication with the hub, since it is possible to take a long time to provision or pull the user container we set it at a high value by default | `1200`
+
+To set configuration values through the command line:
 
 ```console
 $ helm install jovial/ --name jovial \
-    --set jovial.kubernetes.clusterDomain=cluster.example.com
+    --set k8s.domain=cluster.example.com
 ```
 
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
