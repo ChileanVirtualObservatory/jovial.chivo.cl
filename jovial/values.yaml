@@ -41,7 +41,4 @@ nginx-ingress:
     replicaCount: 3
     minAvailable: 2
     service:
-      type: NodePort
-      nodePorts:
-        http: 30080
-        https: 30443
+      clusterIP: 10.96.0.100
