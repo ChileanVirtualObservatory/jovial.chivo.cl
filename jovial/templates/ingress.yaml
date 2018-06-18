@@ -1,4 +1,4 @@
-{{- if .Values.jovial.kubernetes.ingress.enabled -}}
+{{- if .Values.k8s.ingress.enabled -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -10,12 +10,9 @@ metadata:
     heritage: {{ .Release.Service }}
   annotations:
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/affinity: "cookie"
-    nginx.ingress.kubernetes.io/session-cookie-name: "lbroute"
-    nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
 spec:
   rules:
-    - host: {{ .Values.jovial.kubernetes.ingress.domain }}
+    - host: {{ .Values.k8s.ingress.domain }}
       http:
         paths:
           - path: /

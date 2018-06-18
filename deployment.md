@@ -56,7 +56,8 @@ Parameter | Description | Default
 `k8s.ingress.domain` | Domain of the ingress resource that will route to JOVIAL. | `jovial.example.com`
 `users.home.nfs.server` | Address of the NFS server where users homes are stored. | `nfs.example.com`
 `users.home.nfs.path` | Path in the NFS server where users homes are stored. | `/exports/users`
-`users.ldap.address` | Address of the LDAP server where users information is stored. | `ldap.example.com:389`
+`users.ldap.address` | Address of the LDAP server where users information is stored. | `ldap.example.com`
+`users.ldap.port` | Port of the LDAP server where users information is stored. | `389`
 `users.ldap.useSSL` | Should the LDAP authenticator of the hub use SSL to talk with the LDAP server? | `true`
 `users.ldap.dn` | Template used as DN when authenticating the user against the LDAP server, here the token **`username`** will be replaced with the username of who is currently trying to login in the hub frontend. | `uid={username},dc=people,dc=example,dc=com`
 `users.container.image` | Docker image for the user notebook server | `docker.chivo.cl/jovial/user:latest`

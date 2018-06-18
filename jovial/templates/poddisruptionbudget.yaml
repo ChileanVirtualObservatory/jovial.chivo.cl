@@ -12,4 +12,4 @@ spec:
     matchLabels:
       app: {{ template "jovial.name" . }}
       release: {{ .Release.Name }}
-  minAvailable: {{ .Values.jovial.kubernetes.deployment.minAvailable }}
+  minAvailable: {{ .Values.k8s.deploy.minAvailable }}

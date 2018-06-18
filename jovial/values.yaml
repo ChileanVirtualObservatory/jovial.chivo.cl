@@ -1,54 +1,38 @@
-## JOVIAL configuration
+# JOVIAL Configuration Options
 
-jovial:
-  kubernetes:
-    clusterDomain: cluster.local
-    userHomeDirTemplate: /users/{username}
-    deployment:
-      replicaCount: 3
-      minAvailable: 2
-      image:
-        repository: docker-registry.chivo.cl/jovial/hub
-        tag: latest
-        pullPolicy: IfNotPresent
-      ports:
-        frontend: 8000
-        proxy: 8001
-        rest: 8081
-      command: ["/bin/bash", "-c", "jupyterhub -f /config/JOVIAL_config.py"]
-      resources: {}
-      nodeSelector: {}
-      tolerations: []
-      affinity: {}
-    ingress:
-      enabled: true
-      domain: jovial.chivo.cl
+k8s:
+  domain: cluster.local
+  deploy:
+    replicas: 3
+    minAvailable: 2
+    image: docker.chivo.cl/jovial/hub:latest
+    ports:
+      frontend: 8000
+      proxy: 8001
+      rest: 8081
+  ingress:
+    enabled: true
+    domain: jovial.example.com
+
+users:
+  home:
+    nfs:
+      server: nfs.example.com
+      path: /exports/users
   ldap:
-    address: 10.6.91.26
+    address: ldap.example.com
     port: 389
-    dnTemplate: uid={username},dc=cm,dc=cluster
-    useSSL: false
-  hub:
-    confirmNoSSL: true
-    listenAddress: 0.0.0.0
-    cleanupUsersOnExit: true
-  spawner:
-    startTimeout: 1200
-    podNameTemplate: jovial-{username}
-    debugMessages: false
-    image:
-      repository: docker-registry.chivo.cl/jovial/user
-      tag: latest
-      pullPolicy: Always
-    extraArgs: "--NotebookApp.iopub_data_rate_limit=1000000000"
-    installer:
-      name: 'conda-installer'
-      image:
-        repository: docker-registry.chivo.cl/jovial/installer
-        tag: latest
-        pullPolicy: Always
+    useSSL: true
+    dn: uid={username},dc=people,dc=example,dc=com
+  container:
+    image: docker.chivo.cl/jovial/user:latest
+    extraArgs: [""]
 
-## nginx-ingress dependency configuration
+hub:
+  debug: false
+  timeout: 1200
+
+# nginx-ingress Dependency Configuration
 
 nginx-ingress:
   rbac:

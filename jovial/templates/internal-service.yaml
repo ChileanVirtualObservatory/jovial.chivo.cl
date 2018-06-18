@@ -10,11 +10,11 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: {{ .Values.jovial.kubernetes.deployment.ports.rest }}
+    - port: {{ .Values.k8s.deploy.ports.rest }}
       targetPort: rest-api
       protocol: TCP
       name: rest-api
-    - port: {{ .Values.jovial.kubernetes.deployment.ports.proxy }}
+    - port: {{ .Values.k8s.deploy.ports.proxy }}
       targetPort: proxy-api
       protocol: TCP
       name: proxy-api
