@@ -54,8 +54,9 @@ data:
     }]
     config.KubeSpawner.volumes = [{
         'name': 'home-{username}',
-        'hostPath': {
-           'path': '/users/{username}' #TODO: Change this to a nfs mount
+        'nfs': {
+          'server': '{{ .Values.users.home.nfs.server }}',
+          'path': '{{ .Values.users.home.nfs.path }}/{username}'
         }
     }]
 
