@@ -41,4 +41,5 @@ nginx-ingress:
     replicaCount: 3
     minAvailable: 2
     service:
+      type: ClusterIP
       clusterIP: 10.96.0.100
