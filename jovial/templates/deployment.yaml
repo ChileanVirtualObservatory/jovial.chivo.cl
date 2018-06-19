@@ -25,12 +25,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: {{ .Values.k8s.deploy.image }}
           imagePullPolicy: Always
-          command:
-            - /bin/bash
-            - -c
-            - jupyterhub
-            - -f
-            - /config/JOVIAL_config.py
+          command: ["/bin/bash", "-c", "jupyterhub -f /config/JOVIAL_config.py"]
           ports:
             - name: frontend
               containerPort: {{ .Values.k8s.deploy.ports.frontend }}
