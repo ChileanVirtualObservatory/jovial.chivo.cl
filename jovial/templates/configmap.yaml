@@ -13,7 +13,7 @@ data:
     import re
 
     config = get_config()
-    # Since helm translates 'True' to 'true' and 'False' to 'false' we need this so we don't get python 'NameErrors'
+    # Since helm translates 'True' to 'true' and 'False' to 'false' we need this so we don't get python 'NameError's
     false = False
     true = True
 
@@ -31,7 +31,14 @@ data:
 
     config.LDAPAuthenticator.server_address = '{{ .Values.users.ldap.address }}'
     config.LDAPAuthenticator.server_port = {{ .Values.users.ldap.port }}
-    config.LDAPAuthenticator.use_ssl = {{ .Values.users.ldap.useSSL }}
+    {{if .Values.users.ldap.ssl.enabled}}
+    config.LDAPAuthenticator.use_ssl = true
+    config.LDAPAuthenticator.server_ca_file = '/certs/ca.pem'
+    config.LDAPAuthenticator.client_certificate_file = '/certs/client.pem'
+    config.LDAPAuthenticator.client_key_file = '/certs/client.key'
+    {{else}}
+    config.LDAPAuthenticator.use_ssl = false
+    {{end}}
     config.LDAPAuthenticator.bind_dn_template = '{{ .Values.users.ldap.dn }}'
     config.PAMAuthenticator.open_sessions = False
 
@@ -39,7 +46,7 @@ data:
 
     config.KubeSpawner.namespace = '{{ .Release.Namespace }}'
     config.KubeSpawner.start_timeout = {{ .Values.hub.timeout }}
-    config.KubeSpawner.pod_name_template = '{{ template "jovial.fullname" . }}-jovial-{username}'
+    config.KubeSpawner.pod_name_template = '{{ template "jovial.fullname" . }}-{username}'
     config.KubeSpawner.singleuser_image_spec = '{{ .Values.users.container.image }}'
     config.KubeSpawner.singleuser_image_pull_policy = 'Always'
     config.KubeSpawner.hub_connect_ip = '{{ template "jovial.fullname" . }}-internal.{{ .Release.Namespace }}.svc.{{ .Values.k8s.domain }}'

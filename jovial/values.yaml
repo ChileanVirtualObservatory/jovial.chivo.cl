@@ -21,9 +21,22 @@ users:
       path: /exports/users
   ldap:
     address: ldap.example.com
-    port: 389
-    useSSL: true
+    port: 636
     dn: uid={username},dc=people,dc=example,dc=com
+    ssl:
+      enabled: true
+      CACert: |
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+      clientCert: |
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+      clientKey: |
+        -----BEGIN PRIVATE KEY-----
+        ...
+        -----END PRIVATE KEY-----
   container:
     image: docker.chivo.cl/jovial/user:latest
     extraArgs: [""]
