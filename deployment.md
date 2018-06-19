@@ -58,7 +58,10 @@ Parameter | Description | Default
 `users.home.nfs.path` | Path in the NFS server where users homes are stored. | `/exports/users`
 `users.ldap.address` | Address of the LDAP server where users information is stored. | `ldap.example.com`
 `users.ldap.port` | Port of the LDAP server where users information is stored. | `389`
-`users.ldap.useSSL` | Should the LDAP authenticator of the hub use SSL to talk with the LDAP server? | `true`
+`users.ldap.ssl.enabled` | Should the LDAP authenticator of the hub use SSL to talk with the LDAP server? | `true`
+`users.ldap.ssl.CACert` | CA certificate of the LDAP server. If `users.ldap.ssl.enabled` is `false` this setting is ignored | `...`
+`users.ldap.ssl.clientCert` | Certificate of the LDAP client. If `users.ldap.ssl.enabled` is `false` this setting is ignored | `...`
+`users.ldap.ssl.clientKey` | Private key of the LDAP client. If `users.ldap.ssl.enabled` is `false` this setting is ignored | `...`
 `users.ldap.dn` | Template used as DN when authenticating the user against the LDAP server, here the token **`username`** will be replaced with the username of who is currently trying to login in the hub frontend. | `uid={username},dc=people,dc=example,dc=com`
 `users.container.image` | Docker image for the user notebook server | `docker.chivo.cl/jovial/user:latest`
 `users.container.extraArgs` | Extra command line arguments to the notebook server | `[""]`
