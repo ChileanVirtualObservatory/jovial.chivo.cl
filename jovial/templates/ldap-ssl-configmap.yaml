@@ -1,0 +1,18 @@
+{{if .Values.users.ldap.ssl.enabled}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "jovial.fullname" . }}-ldap-ssl
+  labels:
+    app: {{ template "jovial.name" . }}
+    chart: {{ template "jovial.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  ca.pem: |
+{{.Values.users.ldap.ssl.CACert | indent 3}}
+  client.pem: |
+{{.Values.users.ldap.ssl.clientCert | indent 3}}
+  client.key: |
+{{.Values.users.ldap.ssl.clientKey | indent 3}}
+{{end}}

@@ -44,6 +44,10 @@ spec:
           volumeMounts:
             - name: jovial-configmap
               mountPath: /config/
+            {{if .Values.users.ldap.ssl.enabled}}
+            - name: jovial-ldap-ssl
+              mountPath: /certs/
+            {{end}}
           livenessProbe:
             tcpSocket:
               port: frontend
@@ -54,3 +58,8 @@ spec:
         - name: jovial-configmap
           configmap:
             name: {{ template "jovial.fullname" . }}-config
+        {{if .Values.users.ldap.ssl.enabled}}
+        - name: jovial-ldap-ssl
+          configmap:
+            name: {{ template "jovial.fullname" . }}-ldap-ssl
+        {{end}}
