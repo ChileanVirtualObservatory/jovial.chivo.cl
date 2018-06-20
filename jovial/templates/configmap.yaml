@@ -66,6 +66,19 @@ data:
           'path': '{{ .Values.users.home.nfs.path }}/{username}'
         }
     }]
+    config.KubeSpawner.singleuser_init_containers = [{
+        'name': 'custom-init-container',
+        'image': '{{ .Values.users.initContainer.image }}',
+        'imagePullPolicy': 'Always',
+        'volumeMounts': [{
+            'name': 'home-{jovial-username}',
+            'mountPath': '/home/{jovial-username}'
+        }],
+        'env': [
+            {'name': 'USER', 'value': '{jovial-username}'},
+            {'name': 'HOME', 'value': '/home/{jovial-username}'}
+        ]
+    }]
 
     def getLocalSpawnerIP():
       sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
