@@ -46,6 +46,7 @@ users:
 hub:
   debug: false
   timeout: 1200
+  cleanupServers: true
 
 # nginx-ingress Dependency Configuration
 

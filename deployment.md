@@ -68,6 +68,7 @@ Parameter | Description | Default
 `users.initContainer.image` | A custom docker image that runs before the actual notebook container starts, inside this container the user home folder will be mounted throught the NFS server at `/home/{username}` | `docker.chivo.cl/jovial/installer:latest`
 `hub.debug` | While starting a user pod, the hub server can print additional information related to JOVIAL internal configurations, use this setting to enable or disable this messages. | `false`
 `hub.timeout` | Timeout in seconds to wait for the user pod to start and initialize communication with the hub, since it is possible to take a long time to provision or pull the user container we set it at a high value by default | `1200`
+`hub.cleanupServers` | Whether to shutdown single-user servers when the Hub shuts down. Disable if you want to be able to teardown the Hub while leaving the single-user servers running. | `true`
 
 To set configuration values through the command line:
 

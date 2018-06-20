@@ -25,7 +25,7 @@ data:
     config.JupyterHub.ip = '0.0.0.0'
     config.JupyterHub.hub_ip = '0.0.0.0'
     config.JupyterHub.confirm_no_ssl = True
-    config.JupyterHub.cleanup_servers = False #TODO: Test this and add option in values.yaml
+    config.JupyterHub.cleanup_servers = {{ .Values.hub.cleanupServers }}
 
     # LDAP Settings ----------------------------------------------------------------
 
