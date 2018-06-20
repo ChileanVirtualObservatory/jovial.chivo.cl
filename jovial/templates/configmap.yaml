@@ -50,6 +50,7 @@ data:
     config.KubeSpawner.singleuser_image_spec = '{{ .Values.users.container.image }}'
     config.KubeSpawner.singleuser_image_pull_policy = 'Always'
     config.KubeSpawner.hub_connect_ip = '{{ template "jovial.fullname" . }}-internal.{{ .Release.Namespace }}.svc.{{ .Values.k8s.domain }}'
+    config.KubeSpawner.default_url = '{{ .Values.hub.defaultURL }}'
     config.KubeSpawner.environment = {
             'HOME': lambda spawner: '/home/' + str(spawner.user.name),
             'USER': lambda spawner: spawner.user.name,
