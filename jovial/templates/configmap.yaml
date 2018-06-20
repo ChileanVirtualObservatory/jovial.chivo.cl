@@ -67,16 +67,16 @@ data:
         }
     }]
     config.KubeSpawner.singleuser_init_containers = [{
-        'name': 'custom-init-container',
+        'name': 'init',
         'image': '{{ .Values.users.initContainer.image }}',
         'imagePullPolicy': 'Always',
         'volumeMounts': [{
-            'name': 'home-{jovial-username}',
-            'mountPath': '/home/{jovial-username}'
+            'name': 'home-{username}',
+            'mountPath': '/home/{username}'
         }],
         'env': [
-            {'name': 'USER', 'value': '{jovial-username}'},
-            {'name': 'HOME', 'value': '/home/{jovial-username}'}
+            {'name': 'USER', 'value': '{username}'},
+            {'name': 'HOME', 'value': '/home/{username}'}
         ]
     }]
 
@@ -88,17 +88,6 @@ data:
     def modifyPodHook(spawner, pod):
       if {{ .Values.hub.debug }}:
         spawner.log.info('[modifyPodHook]: Spawner pod internal type: ' + str(type(pod)))
-        spawner.log.info('[modifyPodHook]: Replacing \'{jovial-username}\' with \'' + str(spawner.user.name) + '\' in the \'initContainers\' section of the pod')
-      container = pod.spec.init_containers[0]
-      if {{ .Values.hub.debug }}:
-        spawner.log.info('[modifyPodHook]: initContainer type: ' + str(type(container)))
-        spawner.log.info('[modifyPodHook]: initContainer Before: ' + str(container))
-      container['volumeMounts'][0]['name'] = container['volumeMounts'][0]['name'].replace('{jovial-username}', spawner.user.name)
-      container['volumeMounts'][0]['mountPath'] = container['volumeMounts'][0]['mountPath'].replace('{jovial-username}', spawner.user.name)
-      container['env'][0]['value'] = container['env'][0]['value'].replace('{jovial-username}', spawner.user.name)
-      container['env'][1]['value'] = container['env'][1]['value'].replace('{jovial-username}', spawner.user.name)
-      if {{ .Values.hub.debug }}:
-        spawner.log.info('[modifyPodHook]: initContainer After: ' + str(container))
       containerEnv = pod.spec.containers[0].env
       index = -1
       for i, var in enumerate(containerEnv):
