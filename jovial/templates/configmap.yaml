@@ -107,7 +107,7 @@ data:
         spawner.log.info('[modifyPodHook]: JUPYTERHUB_API_URL After: ' + str(containerEnv[index].value))
       extra_args = dict()
       extra_args['name'] = 'JOVIAL_NOTEBOOK_EXTRA_ARGS'
-      extra_args['value'] = '{{ .Values.users.container.extraArgs }}' #TODO: Fix this
+      extra_args['value'] = '{{ .Values.users.container.extraArgs }}'
       containerEnv.append(extra_args)
       if {{ .Values.hub.debug }}:
         spawner.log.info('[modifyPodHook]: ENV: ' + str(containerEnv))

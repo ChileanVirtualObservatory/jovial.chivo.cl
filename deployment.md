@@ -64,7 +64,7 @@ Parameter | Description | Default
 `users.ldap.ssl.clientKey` | Private key of the LDAP client. If `users.ldap.ssl.enabled` is `false` this setting is ignored | `...`
 `users.ldap.dn` | Template used as DN when authenticating the user against the LDAP server, here the token **`username`** will be replaced with the username of who is currently trying to login in the hub frontend. | `uid={username},dc=people,dc=example,dc=com`
 `users.container.image` | Docker image for the user notebook server, inside this container the user home folder will be mounted throught the NFS server at `/home/{username}` | `docker.chivo.cl/jovial/user:latest`
-`users.container.extraArgs` | Extra command line arguments to the notebook server | `[""]`
+`users.container.extraArgs` | Extra command line arguments to the notebook server | `""`
 `users.initContainer.image` | A custom docker image that runs before the actual notebook container starts, inside this container the user home folder will be mounted throught the NFS server at `/home/{username}` | `docker.chivo.cl/jovial/installer:latest`
 `hub.debug` | While starting a user pod, the hub server can print additional information related to JOVIAL internal configurations, use this setting to enable or disable this messages. | `false`
 `hub.timeout` | Timeout in seconds to wait for the user pod to start and initialize communication with the hub, since it is possible to take a long time to provision or pull the user container we set it at a high value by default | `1200`

@@ -39,7 +39,7 @@ users:
         -----END PRIVATE KEY-----
   container:
     image: docker.chivo.cl/jovial/user:latest
-    extraArgs: [""]
+    extraArgs: ""
   initContainer:
     image: docker.chivo.cl/jovial/installer:latest
 
