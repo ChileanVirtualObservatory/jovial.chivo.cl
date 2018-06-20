@@ -9,5 +9,5 @@ metadata:
   name: {{ template "jovial.fullname" . }}
 rules:
 - apiGroups: [""]
-  resources: ["pods"]
+  resources: ["pods", "events"]
   verbs: ["*"]
