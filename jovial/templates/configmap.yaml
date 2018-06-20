@@ -80,11 +80,6 @@ data:
         ]
     }]
 
-    def getLocalSpawnerIP():
-      sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-      sock.connect(('kubernetes.default.svc.cluster.local', 443))
-      return sock.getsockname()[0]
-
     def modifyPodHook(spawner, pod):
       if {{ .Values.hub.debug }}:
         spawner.log.info('[modifyPodHook]: Spawner pod internal type: ' + str(type(pod)))
