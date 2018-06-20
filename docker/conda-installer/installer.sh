@@ -12,7 +12,7 @@ if [ ! -f $SUCCESS_FLAG ]; then
   fi
 	su $USER -c "grep -q PATH=$CONDA_DIR/bin:$PATH $HOME/.bashrc || echo PATH=$CONDA_DIR/bin:$PATH >> $HOME/.bashrc"
 	su $USER -c "/bin/bash /conda-installer.sh -f -b -p $CONDA_DIR"
-	su $USER -c "yes | $CONDA_DIR/bin/pip install jupyterhub acalib"
+	su $USER -c "yes | $CONDA_DIR/bin/pip install jupyterhub==0.8.1 acalib"
 	touch $SUCCESS_FLAG
 fi
 echo 'Installation Completed'
