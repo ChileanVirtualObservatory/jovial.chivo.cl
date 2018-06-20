@@ -96,10 +96,10 @@ data:
             break
       if {{ .Values.hub.debug }}:
         spawner.log.info('[modifyPodHook]: JUPYTERHUB_API_URL Before: ' + str(containerEnv[index].value))
-      pattern = re.compile('http:\/\/(.*):8081\/hub\/api')
+      pattern = re.compile('http:\/\/(.*):{{ .Values.k8s.deploy.ports.rest }}\/hub\/api')
       result = pattern.search(containerEnv[index].value)
       to_replace = result.group(1)
-      spawner_ip = getLocalSpawnerIP()
+      spawner_ip = '{{ template "jovial.fullname" . }}-internal.{{ .Release.Namespace }}.svc.{{ .Values.k8s.domain }}'
       if {{ .Values.hub.debug }}:
         spawner.log.info('[modifyPodHook]: Replacing ' + to_replace + ' with ' + spawner_ip)
       containerEnv[index].value = containerEnv[index].value.replace(to_replace, spawner_ip)
