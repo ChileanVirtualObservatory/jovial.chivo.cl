@@ -50,7 +50,6 @@ data:
     config.KubeSpawner.singleuser_image_spec = '{{ .Values.users.container.image }}'
     config.KubeSpawner.singleuser_image_pull_policy = 'Always'
     config.KubeSpawner.hub_connect_ip = '{{ template "jovial.fullname" . }}-internal.{{ .Release.Namespace }}.svc.{{ .Values.k8s.domain }}'
-    config.KubeSpawner.default_url = '{{ .Values.hub.defaultURL }}'
     config.KubeSpawner.environment = {
             'HOME': lambda spawner: '/home/' + str(spawner.user.name),
             'USER': lambda spawner: spawner.user.name,
@@ -103,7 +102,7 @@ data:
         spawner.log.info('[modifyPodHook]: JUPYTERHUB_API_URL After: ' + str(containerEnv[index].value))
       extra_args = dict()
       extra_args['name'] = 'JOVIAL_NOTEBOOK_EXTRA_ARGS'
-      extra_args['value'] = '{{ .Values.users.container.extraArgs }}'
+      extra_args['value'] = "--NotebookApp.default_url='{{ .Values.hub.defaultURL }}' {{ .Values.users.container.extraArgs }}"
       containerEnv.append(extra_args)
       if {{ .Values.hub.debug }}:
         spawner.log.info('[modifyPodHook]: ENV: ' + str(containerEnv))
