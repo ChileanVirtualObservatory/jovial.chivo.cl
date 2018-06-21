@@ -59,21 +59,29 @@ Parameter | Description | Default
 `users.ldap.address` | Address of the LDAP server where users information is stored. | `ldap.example.com`
 `users.ldap.port` | Port of the LDAP server where users information is stored. | `389`
 `users.ldap.ssl.enabled` | Should the LDAP authenticator of the hub use SSL to talk with the LDAP server? | `true`
-`users.ldap.ssl.CACert` | CA certificate of the LDAP server. If `users.ldap.ssl.enabled` is `false` this setting is ignored | `...`
-`users.ldap.ssl.clientCert` | Certificate of the LDAP client. If `users.ldap.ssl.enabled` is `false` this setting is ignored | `...`
-`users.ldap.ssl.clientKey` | Private key of the LDAP client. If `users.ldap.ssl.enabled` is `false` this setting is ignored | `...`
+`users.ldap.ssl.CACert` | CA certificate of the LDAP server. If `users.ldap.ssl.enabled` is `false` this setting is ignored. | `...`
+`users.ldap.ssl.clientCert` | Certificate of the LDAP client. If `users.ldap.ssl.enabled` is `false` this setting is ignored. | `...`
+`users.ldap.ssl.clientKey` | Private key of the LDAP client. If `users.ldap.ssl.enabled` is `false` this setting is ignored. | `...`
 `users.ldap.dn` | Template used as DN when authenticating the user against the LDAP server, here the token **`username`** will be replaced with the username of who is currently trying to login in the hub frontend. | `uid={username},dc=people,dc=example,dc=com`
-`users.container.image` | Docker image for the user notebook server, inside this container the user home folder will be mounted throught the NFS server at `/home/{username}` | `docker.chivo.cl/jovial/user:latest`
-`users.container.extraArgs` | Extra command line arguments to the notebook server | `""`
-`users.initContainer.image` | A custom docker image that runs before the actual notebook container starts, inside this container the user home folder will be mounted throught the NFS server at `/home/{username}` | `docker.chivo.cl/jovial/installer:latest`
+`users.container.image` | Docker image for the user notebook server, inside this container the user home folder will be mounted throught the NFS server at `/home/{username}`. | `docker.chivo.cl/jovial/user:latest`
+`users.container.extraArgs` | Extra command line arguments to the notebook server. | `""`
+`users.initContainer.image` | A custom docker image that runs before the actual notebook container starts, inside this container the user home folder will be mounted throught the NFS server at `/home/{username}`. | `docker.chivo.cl/jovial/installer:latest`
+`users.nodeSelector.enabled` | Whether to add a `nodeSelector` section in the specification of the single user pod. Currently only the `beta.kubernetes.io/instance-type` label is supported. | `false`
+`users.nodeSelector.instanceType` | Value for the `beta.kubernetes.io/instance-type` label of the `nodeSelector` section in the single user pod specification. If `hub.nodeSelector.enabled` is set to `false` this option is ignored. | `''`
 `hub.debug` | While starting a user pod, the hub server can print additional information related to JOVIAL internal configurations, use this setting to enable or disable this messages. | `false`
-`hub.timeout` | Timeout in seconds to wait for the user pod to start and initialize communication with the hub, since it is possible to take a long time to provision or pull the user container we set it at a high value by default | `1200`
+`hub.timeout` | Timeout in seconds to wait for the user pod to start and initialize communication with the hub, since it is possible to take a long time to provision or pull the user container we set it at a high value by default. | `1200`
 `hub.cleanupServers` | Whether to shutdown single-user servers when the Hub shuts down. Disable if you want to be able to teardown the Hub while leaving the single-user servers running. | `true`
 `hub.defaultURL` | The URL the single-user server should start in. You can set this to `/lab` to have JupyterLab start by default, rather than Jupyter Notebook. | `''`
 `hub.nodeSelector.enabled` | Whether to add a `nodeSelector` section in the deployment specification of the hub server. Currently only the `beta.kubernetes.io/instance-type` label is supported. | `false`
 `hub.nodeSelector.instanceType` | Value for the `beta.kubernetes.io/instance-type` label of the `nodeSelector` section in the deployment specification for the hub server. If `hub.nodeSelector.enabled` is set to `false` this option is ignored. | `''`
-`users.nodeSelector.enabled` | Whether to add a `nodeSelector` section in the specification of the single user pod. Currently only the `beta.kubernetes.io/instance-type` label is supported. | `false`
-`users.nodeSelector.instanceType` | Value for the `beta.kubernetes.io/instance-type` label of the `nodeSelector` section in the single user pod specification. If `hub.nodeSelector.enabled` is set to `false` this option is ignored. | `''`
+`hub.instanceTypes.enabled` | Whether to show the **Spawner Options** form after a user signs in, this will allow the user to choose from three instance types small, medium and large which will change the resources assigned to his jupyter notebook. | `false`
+`hub.instanceTypes.small.cpu` | CPU limit for the `small` instance type, for more information about units and possible value see the [Kubernetes Documentation](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-cpu). If `hub.instanceTypes.enabled` is set to `false` this option is ignored. | `1`
+`hub.instanceTypes.small.memory` | Memory limit for the `small` instance type, for more information about units and possible value see the [Kubernetes Documentation](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-memory). If `hub.instanceTypes.enabled` is set to `false` this option is ignored. | `2G`
+`hub.instanceTypes.medium.cpu` | CPU limit for the `medium` instance type, for more information about units and possible value see the [Kubernetes Documentation](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-cpu). If `hub.instanceTypes.enabled` is set to `false` this option is ignored. | `2`
+`hub.instanceTypes.medium.memory` | Memory limit for the `medium` instance type, for more information about units and possible value see the [Kubernetes Documentation](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-memory). If `hub.instanceTypes.enabled` is set to `false` this option is ignored. | `6G`
+`hub.instanceTypes.large.cpu` | CPU limit for the `large` instance type, for more information about units and possible value see the [Kubernetes Documentation](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-cpu). If `hub.instanceTypes.enabled` is set to `false` this option is ignored. | `4`
+`hub.instanceTypes.large.memory` | Memory limit for the `large` instance type, for more information about units and possible value see the [Kubernetes Documentation](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-memory). If `hub.instanceTypes.enabled` is set to `false` this option is ignored. | `8G`
+
 To set configuration values through the command line:
 
 ```console

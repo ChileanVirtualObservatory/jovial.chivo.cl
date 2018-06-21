@@ -82,6 +82,32 @@ data:
     {{ if .Values.users.nodeSelector.enabled }}
     config.KubeSpawner.node_selector = {'beta.kubernetes.io/instance-type': {{ .Values.users.nodeSelector.instanceType | quote }}}
     {{ end }}
+    {{ if .Values.hub.instanceTypes.enabled }}
+    config.KubeSpawner.profile_list = [
+      {
+        'display_name': 'Small instance: {{ .Values.hub.instanceTypes.small.memory }} memory, {{ .Values.hub.instanceTypes.small.core }} core',
+        'default': True,
+        'kubespawner_override': {
+          'mem_limit': '{{ .Values.hub.instanceTypes.small.memory }}',
+          'cpu_limit': '{{ .Values.hub.instanceTypes.small.cpu }}'
+        }
+      },
+      {
+        'display_name': 'Medium instance: {{ .Values.hub.instanceTypes.medium.memory }} memory, {{ .Values.hub.instanceTypes.medium.core }} core',
+        'kubespawner_override': {
+          'mem_limit': '{{ .Values.hub.instanceTypes.medium.memory }}',
+          'cpu_limit': '{{ .Values.hub.instanceTypes.medium.cpu }}'
+        }
+      },
+      {
+        'display_name': 'Large instance: {{ .Values.hub.instanceTypes.large.memory }} memory, {{ .Values.hub.instanceTypes.large.core }} core',
+        'kubespawner_override': {
+          'mem_limit': '{{ .Values.hub.instanceTypes.large.memory }}',
+          'cpu_limit': '{{ .Values.hub.instanceTypes.large.cpu }}'
+        }
+      }
+    ]
+    {{ end }}
 
     def modifyPodHook(spawner, pod):
       if {{ .Values.hub.debug }}:

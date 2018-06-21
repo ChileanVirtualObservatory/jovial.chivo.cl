@@ -54,6 +54,17 @@ hub:
   nodeSelector:
     enabled: false
     instanceType: ''
+  instanceTypes:
+    enabled: false
+    small:
+      cpu: 1
+      memory: 2G
+    medium:
+      cpu: 2
+      memory: 6G
+    large:
+      cpu: 4
+      memory: 8G
 
 # nginx-ingress Dependency Configuration
 
