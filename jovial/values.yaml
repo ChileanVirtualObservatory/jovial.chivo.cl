@@ -48,6 +48,9 @@ hub:
   timeout: 1200
   cleanupServers: true
   defaultURL: ''
+  nodeSelector:
+    enabled: false
+    instanceType: ''
 
 # nginx-ingress Dependency Configuration
 

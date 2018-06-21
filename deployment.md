@@ -70,6 +70,8 @@ Parameter | Description | Default
 `hub.timeout` | Timeout in seconds to wait for the user pod to start and initialize communication with the hub, since it is possible to take a long time to provision or pull the user container we set it at a high value by default | `1200`
 `hub.cleanupServers` | Whether to shutdown single-user servers when the Hub shuts down. Disable if you want to be able to teardown the Hub while leaving the single-user servers running. | `true`
 `hub.defaultURL` | The URL the single-user server should start in. You can set this to `/lab` to have JupyterLab start by default, rather than Jupyter Notebook. | `''`
+`hub.nodeSelector.enabled` | Whether to add a `nodeSelector` section in the deployment specification of the hub server. Currently only the `beta.kubernetes.io/instance-type` label is supported. | `false`
+`hub.nodeSelector.instanceType` | Value for the `beta.kubernetes.io/instance-type` label of the `nodeSelector` section in the deployment specification for the hub server. If `hub.nodeSelector.enabled` is set to `false` this option is ignored. | `''`
 
 To set configuration values through the command line:
 

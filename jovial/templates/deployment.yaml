@@ -19,6 +19,10 @@ spec:
         app: {{ template "jovial.name" . }}
         release: {{ .Release.Name }}
     spec:
+      {{ if .Values.hub.nodeSelector.enabled }}
+      nodeSelector:
+        beta.kubernetes.io/instance-type: {{ .Values.hub.nodeSelector.instanceType }}
+      {{ end }}
       serviceAccountName: {{ template "jovial.fullname" . }}
       automountServiceAccountToken: true
       containers:
