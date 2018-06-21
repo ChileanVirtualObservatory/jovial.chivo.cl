@@ -42,6 +42,9 @@ users:
     extraArgs: ""
   initContainer:
     image: docker.chivo.cl/jovial/installer:latest
+  nodeSelector:
+    enabled: false
+    instanceType: ''
 
 hub:
   debug: false

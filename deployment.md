@@ -72,7 +72,8 @@ Parameter | Description | Default
 `hub.defaultURL` | The URL the single-user server should start in. You can set this to `/lab` to have JupyterLab start by default, rather than Jupyter Notebook. | `''`
 `hub.nodeSelector.enabled` | Whether to add a `nodeSelector` section in the deployment specification of the hub server. Currently only the `beta.kubernetes.io/instance-type` label is supported. | `false`
 `hub.nodeSelector.instanceType` | Value for the `beta.kubernetes.io/instance-type` label of the `nodeSelector` section in the deployment specification for the hub server. If `hub.nodeSelector.enabled` is set to `false` this option is ignored. | `''`
-
+`users.nodeSelector.enabled` | Whether to add a `nodeSelector` section in the specification of the single user pod. Currently only the `beta.kubernetes.io/instance-type` label is supported. | `false`
+`users.nodeSelector.instanceType` | Value for the `beta.kubernetes.io/instance-type` label of the `nodeSelector` section in the single user pod specification. If `hub.nodeSelector.enabled` is set to `false` this option is ignored. | `''`
 To set configuration values through the command line:
 
 ```console

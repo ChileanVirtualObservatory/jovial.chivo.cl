@@ -79,6 +79,9 @@ data:
             {'name': 'HOME', 'value': '/home/{username}'}
         ]
     }]
+    {{ if .Values.users.nodeSelector.enabled }}
+    config.KubeSpawner.node_selector = {'beta.kubernetes.io/instance-type': {{ .Values.users.nodeSelector.instanceType | quote }}}
+    {{ end }}
 
     def modifyPodHook(spawner, pod):
       if {{ .Values.hub.debug }}:
