@@ -131,7 +131,7 @@ data:
       containerExtraArgs = list()
       extra_args = dict()
       extra_args['name'] = 'JOVIAL_NOTEBOOK_EXTRA_ARGS'
-      extra_args['value'] = "--NotebookApp.default_url='{{ .Values.hub.defaultURL }}' {{ .Values.users.container.extraArgs }}"
+      extra_args['value'] = "--NotebookApp.default_url={{ .Values.hub.defaultURL }} {{ .Values.users.container.extraArgs }}"
       containerExtraArgs.append(extra_args)
       index = -1
       for i, var in enumerate(containerEnv):
