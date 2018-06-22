@@ -150,11 +150,11 @@ data:
       result = conn.entries[0]
       useruid = dict()
       useruid['name'] = 'JOVIAL_NOTEBOOK_USER_UID'
-      useruid['value'] = result.uidNumber
+      useruid['value'] = str(result.uidNumber)
       containerExtraArgs.append(useruid)
       usergid = dict()
       usergid['name'] = 'JOVIAL_NOTEBOOK_USER_GID'
-      usergid['value'] = result.gidNumber
+      usergid['value'] = str(result.gidNumber)
       containerExtraArgs.append(usergid)
       containerEnv.extend(containerExtraArgs)
       if {{ .Values.hub.debug }}:
