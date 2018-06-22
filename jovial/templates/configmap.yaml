@@ -84,25 +84,25 @@ data:
     {{ if .Values.hub.instanceTypes.enabled }}
     config.KubeSpawner.profile_list = [
       {
-        'display_name': 'Small instance: {{ .Values.hub.instanceTypes.small.memory }} memory, {{ .Values.hub.instanceTypes.small.core }} core',
+        'display_name': 'Small instance: {{ .Values.hub.instanceTypes.small.memory }} memory, {{ .Values.hub.instanceTypes.small.cpu }} core',
         'default': True,
         'kubespawner_override': {
           'mem_limit': '{{ .Values.hub.instanceTypes.small.memory }}',
-          'cpu_limit': '{{ .Values.hub.instanceTypes.small.cpu }}'
+          'cpu_limit': {{ .Values.hub.instanceTypes.small.cpu }}
         }
       },
       {
-        'display_name': 'Medium instance: {{ .Values.hub.instanceTypes.medium.memory }} memory, {{ .Values.hub.instanceTypes.medium.core }} core',
+        'display_name': 'Medium instance: {{ .Values.hub.instanceTypes.medium.memory }} memory, {{ .Values.hub.instanceTypes.medium.cpu }} core',
         'kubespawner_override': {
           'mem_limit': '{{ .Values.hub.instanceTypes.medium.memory }}',
-          'cpu_limit': '{{ .Values.hub.instanceTypes.medium.cpu }}'
+          'cpu_limit': {{ .Values.hub.instanceTypes.medium.cpu }}
         }
       },
       {
-        'display_name': 'Large instance: {{ .Values.hub.instanceTypes.large.memory }} memory, {{ .Values.hub.instanceTypes.large.core }} core',
+        'display_name': 'Large instance: {{ .Values.hub.instanceTypes.large.memory }} memory, {{ .Values.hub.instanceTypes.large.cpu }} core',
         'kubespawner_override': {
           'mem_limit': '{{ .Values.hub.instanceTypes.large.memory }}',
-          'cpu_limit': '{{ .Values.hub.instanceTypes.large.cpu }}'
+          'cpu_limit': {{ .Values.hub.instanceTypes.large.cpu }}
         }
       }
     ]
