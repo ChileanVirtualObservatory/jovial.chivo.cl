@@ -9,8 +9,7 @@ metadata:
     heritage: {{ .Release.Service }}
 data:
   JOVIAL_config.py: |
-    import socket
-    import re
+    import socket, re, ssl, ldap3
 
     config = get_config()
     # Since helm translates 'True' to 'true' and 'False' to 'false' we need this so we don't get python 'NameError's
@@ -129,10 +128,35 @@ data:
       containerEnv[index].value = containerEnv[index].value.replace(to_replace, spawner_ip)
       if {{ .Values.hub.debug }}:
         spawner.log.info('[modifyPodHook]: JUPYTERHUB_API_URL After: ' + str(containerEnv[index].value))
+      containerExtraArgs = list()
       extra_args = dict()
       extra_args['name'] = 'JOVIAL_NOTEBOOK_EXTRA_ARGS'
       extra_args['value'] = "--NotebookApp.default_url='{{ .Values.hub.defaultURL }}' {{ .Values.users.container.extraArgs }}"
-      containerEnv.append(extra_args)
+      containerExtraArgs.append(extra_args)
+      index = -1
+      for i, var in enumerate(containerEnv):
+         if var.name == 'USER':
+            index = i
+            break
+      username = containerEnv[index].value
+      {{if .Values.users.ldap.ssl.enabled}}
+      tls = ldap3.Tls(local_private_key_file='/root/client.key', local_certificate_file='/root/client.pem', ca_certs_file='/root/ca.pem', validate=ssl.CERT_REQUIRED)
+      server = ldap3.Server('{{ .Values.users.ldap.address }}', port={{ .Values.users.ldap.port }}, use_ssl=True, tls=tls)
+      {{else}}
+      server = ldap3.Server('{{ .Values.users.ldap.address }}', port={{ .Values.users.ldap.port }}, use_ssl=False)
+      {{end}}
+      conn = ldap3.Connection(server, auto_bind=True)
+      conn.search('{{ .Values.users.ldap.dn }}'.replace('{username}', username), '(uid=*)', attributes=['uidNumber', 'gidNumber'])
+      result = conn.entries[0]
+      useruid = dict()
+      useruid['name'] = 'JOVIAL_NOTEBOOK_USER_UID'
+      useruid['value'] = result.uidNumber
+      containerExtraArgs.append(useruid)
+      usergid = dict()
+      usergid['name'] = 'JOVIAL_NOTEBOOK_USER_GID'
+      usergid['value'] = result.gidNumber
+      containerExtraArgs.append(usergid)
+      containerEnv.extend(containerExtraArgs)
       if {{ .Values.hub.debug }}:
         spawner.log.info('[modifyPodHook]: ENV: ' + str(containerEnv))
       pod.spec.containers[0].working_dir = '/home/' + spawner.user.name
