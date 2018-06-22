@@ -140,7 +140,7 @@ data:
             break
       username = containerEnv[index].value
       {{if .Values.users.ldap.ssl.enabled}}
-      tls = ldap3.Tls(local_private_key_file='/root/client.key', local_certificate_file='/root/client.pem', ca_certs_file='/root/ca.pem', validate=ssl.CERT_REQUIRED)
+      tls = ldap3.Tls(local_private_key_file='/certs/client.key', local_certificate_file='/certs/client.pem', ca_certs_file='/certs/ca.pem', validate=ssl.CERT_REQUIRED)
       server = ldap3.Server('{{ .Values.users.ldap.address }}', port={{ .Values.users.ldap.port }}, use_ssl=True, tls=tls)
       {{else}}
       server = ldap3.Server('{{ .Values.users.ldap.address }}', port={{ .Values.users.ldap.port }}, use_ssl=False)
