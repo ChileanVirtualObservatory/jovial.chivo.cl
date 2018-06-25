@@ -8,3 +8,5 @@ RUN userdel jovyan && rm -rf /home/jovyan
 ADD start.sh /start.sh
 WORKDIR '/home'
 ENTRYPOINT '/start.sh'
+RUN apt update && apt install -y graphviz \
+    && rm -rf /var/lib/apt/lists/*
