@@ -50,7 +50,7 @@ hub:
   debug: false
   timeout: 1200
   cleanupServers: true
-  defaultURL: ''
+  defaultURL: '/'
   nodeSelector:
     enabled: false
     instanceType: ''
