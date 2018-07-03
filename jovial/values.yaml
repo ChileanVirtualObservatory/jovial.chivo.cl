@@ -49,6 +49,8 @@ users:
 hub:
   debug: false
   timeout: 1200
+  adminAccess: false
+  adminUsers: '{}'
   cleanupServers: true
   defaultURL: '/tree'
   nodeSelector:

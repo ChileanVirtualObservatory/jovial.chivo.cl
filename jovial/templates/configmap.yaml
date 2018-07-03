@@ -25,9 +25,11 @@ data:
     config.JupyterHub.hub_ip = '0.0.0.0'
     config.JupyterHub.confirm_no_ssl = True
     config.JupyterHub.cleanup_servers = {{ .Values.hub.cleanupServers }}
+    config.JupyterHub.admin_access = {{ .Values.hub.adminAccess }}
 
     # LDAP Settings ----------------------------------------------------------------
 
+    config.Authenticator.admin_users = {{ .Values.hub.adminUsers | quote }}
     config.LDAPAuthenticator.server_address = '{{ .Values.users.ldap.address }}'
     config.LDAPAuthenticator.server_port = {{ .Values.users.ldap.port }}
     {{if .Values.users.ldap.ssl.enabled}}
