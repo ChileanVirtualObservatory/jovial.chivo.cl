@@ -55,6 +55,7 @@ hub:
   defaultURL: '/tree'
   db:
     capacity: 8Gi
+    reclaimPolicy: Delete
     nfs:
       server: nfs.example.com
       path: /exports/jovialdb

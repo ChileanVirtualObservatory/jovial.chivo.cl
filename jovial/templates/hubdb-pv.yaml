@@ -10,7 +10,7 @@ metadata:
     component: {{ template "jovial.fullname" . }}-jovialdb
 spec:
   storageClassName: manual
-  persistentVolumeReclaimPolicy: Retain
+  persistentVolumeReclaimPolicy: {{ .Values.hub.db.reclaimPolicy }}
   capacity:
     storage: {{ .Values.hub.db.capacity }}
   accessModes:
