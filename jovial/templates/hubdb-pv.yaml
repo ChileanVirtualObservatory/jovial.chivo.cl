@@ -1,0 +1,20 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: {{ template "jovial.fullname" . }}-hubdb-pv
+  labels:
+    app: {{ template "jovial.name" . }}
+    chart: {{ template "jovial.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: {{ template "jovial.fullname" . }}-jovialdb
+spec:
+  storageClassName: manual
+  persistentVolumeReclaimPolicy: Retain
+  capacity:
+    storage: {{ .Values.hub.db.capacity }}
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    server: {{ .Values.hub.db.nfs.server }}
+    path: {{ .Values.hub.db.nfs.path }}

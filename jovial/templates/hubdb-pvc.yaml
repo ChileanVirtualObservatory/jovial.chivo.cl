@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "jovial.fullname" . }}-hubdb-pvc
+  labels:
+    app: {{ template "jovial.name" . }}
+    chart: {{ template "jovial.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: {{ template "jovial.fullname" . }}-jovialdb
+spec:
+  selector:
+    matchLabels:
+      component: {{ template "jovial.fullname" . }}-jovialdb
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.hub.db.capacity }}

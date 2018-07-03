@@ -53,6 +53,11 @@ hub:
   adminUsers: []
   cleanupServers: true
   defaultURL: '/tree'
+  db:
+    capacity: 8Gi
+    nfs:
+      server: nfs.example.com
+      path: /exports/jovialdb
   nodeSelector:
     enabled: false
     instanceType: ''
