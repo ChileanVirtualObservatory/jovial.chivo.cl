@@ -29,7 +29,7 @@ data:
 
     # LDAP Settings ----------------------------------------------------------------
 
-    config.Authenticator.admin_users = {{ .Values.hub.adminUsers | quote }}
+    config.Authenticator.admin_users = {{ .Values.hub.adminUsers }}
     config.LDAPAuthenticator.server_address = '{{ .Values.users.ldap.address }}'
     config.LDAPAuthenticator.server_port = {{ .Values.users.ldap.port }}
     {{if .Values.users.ldap.ssl.enabled}}
