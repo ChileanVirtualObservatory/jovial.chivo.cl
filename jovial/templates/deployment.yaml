@@ -43,6 +43,8 @@ spec:
           volumeMounts:
             - name: jovial-configmap
               mountPath: /config/
+            - name: jovial-data
+              mountPath: /jovialdata/
             {{if .Values.users.ldap.ssl.enabled}}
             - name: jovial-ldap-ssl
               mountPath: /certs/
@@ -57,6 +59,10 @@ spec:
         - name: jovial-configmap
           configmap:
             name: {{ template "jovial.fullname" . }}-config
+        - name: jovial-data
+          nfs:
+            server: {{ .Values.hub.data.nfs.server }}
+            path: {{ .Values.hub.data.nfs.path }}
         {{if .Values.users.ldap.ssl.enabled}}
         - name: jovial-ldap-ssl
           configmap:

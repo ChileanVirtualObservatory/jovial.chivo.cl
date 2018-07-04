@@ -60,6 +60,10 @@ hub:
     nfs:
       server: nfs.example.com
       path: /exports/jovialdb
+  data:
+    nfs:
+      server: nfs.example.com
+      path: /exports/jovialdata
   nodeSelector:
     enabled: false
     instanceType: ''

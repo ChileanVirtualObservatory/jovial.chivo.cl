@@ -26,6 +26,7 @@ data:
     config.JupyterHub.cleanup_servers = {{ .Values.hub.cleanupServers }}
     config.JupyterHub.admin_access = {{ .Values.hub.adminAccess }}
     config.JupyterHub.db_url = 'mysql://jovial:{{ .Values.hub.db.password }}@{{ template "jovial.fullname" . }}-hubdb.{{ .Release.Namespace }}.svc.{{ .Values.k8s.domain }}/jovial'
+    config.JupyterHub.cookie_secret_file = '/jovialdata/jupyterhub_cookie_secret'
 
     # LDAP Settings ----------------------------------------------------------------
 
