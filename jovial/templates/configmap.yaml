@@ -20,12 +20,12 @@ data:
 
     config.JupyterHub.authenticator_class = 'ldapauthenticator.LDAPAuthenticator'
     config.JupyterHub.spawner_class = 'kubespawner.KubeSpawner'
-    config.JupyterHub.extra_log_file = '/var/log/jupyterhub' #TODO: This setting was deprecated?
     config.JupyterHub.ip = '0.0.0.0'
     config.JupyterHub.hub_ip = '0.0.0.0'
     config.JupyterHub.confirm_no_ssl = True
     config.JupyterHub.cleanup_servers = {{ .Values.hub.cleanupServers }}
     config.JupyterHub.admin_access = {{ .Values.hub.adminAccess }}
+    config.JupyterHub.db_url = 'mysql://jovial:{{ .Values.hub.db.password }}@{{ template "jovial.fullname" . }}-hubdb.{{ .Release.Namespace }}.svc.{{ .Values.k8s.domain }}/jovial'
 
     # LDAP Settings ----------------------------------------------------------------
 

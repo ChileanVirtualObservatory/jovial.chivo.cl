@@ -55,6 +55,7 @@ hub:
   defaultURL: '/tree'
   db:
     capacity: 8Gi
+    password: 'passwordforjovialdb'
     reclaimPolicy: Delete
     nfs:
       server: nfs.example.com

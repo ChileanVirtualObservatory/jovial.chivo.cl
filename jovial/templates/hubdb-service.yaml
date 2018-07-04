@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "jovial.fullname" . }}-hubdb
+  labels:
+    app: {{ template "jovial.name" . }}
+    chart: {{ template "jovial.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: jovialdb
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3306
+      targetPort: mysql
+      protocol: TCP
+      name: mysql
+  selector:
+    app: {{ template "jovial.name" . }}
+    chart: {{ template "jovial.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: jovialdb

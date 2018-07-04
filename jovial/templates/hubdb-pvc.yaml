@@ -7,11 +7,11 @@ metadata:
     chart: {{ template "jovial.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-    component: {{ template "jovial.fullname" . }}-jovialdb
+    component: jovialdb
 spec:
   selector:
     matchLabels:
-      component: {{ template "jovial.fullname" . }}-jovialdb
+      component: jovialdb
   storageClassName: manual
   accessModes:
     - ReadWriteOnce
