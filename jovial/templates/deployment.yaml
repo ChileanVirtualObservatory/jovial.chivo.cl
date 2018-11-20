@@ -57,7 +57,7 @@ spec:
               port: frontend
       volumes:
         - name: jovial-configmap
-          configmap:
+          configMap:
             name: {{ template "jovial.fullname" . }}-config
         - name: jovial-data
           nfs:
@@ -65,6 +65,6 @@ spec:
             path: {{ .Values.hub.data.nfs.path }}
         {{if .Values.users.ldap.ssl.enabled}}
         - name: jovial-ldap-ssl
-          configmap:
+          configMap:
             name: {{ template "jovial.fullname" . }}-ldap-ssl
         {{end}}

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -xe
-USER_ID=$(stat -c "%u" $HOME)
+#USER_ID=$(stat -c "%u" $HOME)
+USER_ID=$JOVIAL_NOTEBOOK_USER_UID
 CONDA_DIR=$HOME/.conda
 SUCCESS_FLAG=$CONDA_DIR/.jovial_install_successful
 adduser -u $USER_ID --shell /bin/bash --disabled-password --gecos "" $USER

@@ -166,3 +166,4 @@ data:
       return pod
 
     config.KubeSpawner.modify_pod_hook = modifyPodHook
+

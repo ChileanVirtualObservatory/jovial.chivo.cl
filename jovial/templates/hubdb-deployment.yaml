@@ -28,7 +28,7 @@ spec:
         component: jovialdb
     spec:
       containers:
-      - image: mysql:5.7.22
+      - image: docker.chivo.cl/mysql:5.7.22
         name: mysql
         env:
         - name: MYSQL_RANDOM_ROOT_PASSWORD
